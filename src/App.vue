@@ -25,4 +25,15 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+.btn{
+  background-color:sienna;
+  color:wheat;
+  padding: 10px;
+  cursor:pointer;
+
+}
+.btn:hover{
+  filter:brightness(15%)
+}
 </style>
