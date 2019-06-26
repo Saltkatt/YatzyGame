@@ -43,14 +43,14 @@ export default {
 /* Protocol Area One */
 .p-a-one{
     display: grid;
-    grid-template-columns: 90px 150px;
+    grid-template-columns: 80px 120px;
 }
 .p-a-one div{
     background-color: bisque;
-    border: 3px solid black;
+    border: 2px solid black;
     border-radius: 5px;
     padding: 4px;
-    margin: 5px;
+    margin: 0;
     height: 25px;
     font-size: 10pt;
     font-weight: bold;
