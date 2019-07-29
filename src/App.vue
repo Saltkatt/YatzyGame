@@ -1,21 +1,25 @@
 <template>
   <div id="app">
     <!-- <img alt="Vue logo" src="./assets/logo.png"> -->
-    <HelloWorld msg="Yatzy"/>
+    <Main></Main>
     <Protocol></Protocol>
+    <Dice></Dice>
 
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import Main from './components/Main.vue'
 import Protocol from './components/Protocol.vue'
+import Dice from './components/Dice.vue'
+
 
 export default {
   name: 'app',
   components: {
-    HelloWorld,
-    Protocol
+    Main,
+    Protocol,
+    Dice,
   }
 }
 </script>
