@@ -46,15 +46,18 @@ export default {
 <style scoped> 
 
 .protocol-area{
-    width: 50%;
-    background-color: ivory;
+    /* background-color: ivory; */
     justify-content: center;
-    padding: 10px;
+    
+    
 }
 
 
 /* Desktop */
 @media screen and(min-width: 501px){
+    .protocol-area{
+        width: 80%;
+    }
     
 }
 
@@ -87,15 +90,15 @@ export default {
 
 .btn {
     background-color: #4CAF50; 
-  border: none;
-  color: white;
-  padding: 15px 32px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 2px;
-  cursor: pointer;
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
 }
 
 .btn1:hover{
@@ -109,6 +112,9 @@ export default {
 /* Mobile */
 
 @media screen and (max-width: 500px) {
+    .protocol-area{
+        width: 100%;
+    }
     
 }
 
