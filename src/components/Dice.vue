@@ -2,12 +2,18 @@
 <div>
     <div class="field">
         <div v-for="die in allDice" 
-        :key="die.id"  
+        :key="die.id" 
+        @click="locked(die.id)" 
         class="dice-pos"
-        >
+        v-bind:class="{locked: die.isLocked}">
         {{ die.value }}
     </div>
     </div>
+
+     <button class="btn rollDiceButton" 
+     @click="onBtnClick" 
+     v-bind:disabled="counter === 3"
+      >Slå Tärning</button>
 
 </div>
     
@@ -17,7 +23,37 @@
 import { mapGetters } from 'vuex';
 export default {
     name: "Dice",
-    computed: {...mapGetters(['allDice'])}
+    methods: {
+
+        onBtnClick() {
+            this.$store.commit('increaseCounter')
+            this.randomDice()
+
+        },
+
+         //Rolls random dice
+        randomDice(){
+            //Iterates through dice array and chacks if dice are locked true/false.
+            this.allDice.forEach((element, index) => {
+               if(element.isLocked == false) {
+                 this.$store.commit('rollDice', index);  
+               }
+               
+            });
+        },
+
+        locked(id){
+            this.$store.commit('changeLock', id ) 
+        },
+
+
+    },
+    computed: {...mapGetters([
+    'allDice',
+    'counter',
+    
+    
+    ])}
 
 }
 
@@ -72,6 +108,18 @@ export default {
     cursor: pointer;
 } 
 
+div > div.field > div.locked {
+    background-color: red;
+    border: solid 2px black;
+}
+
+/* Button*/
+
+.rollDiceButton{
+    background-color: coral;
+    border-radius: 5px;
+}
+
 /* Desktop */
 @media screen and (min-width: 501px) {
   .field{
@@ -94,7 +142,7 @@ export default {
 
     .field > div:hover{
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
-}
+    }
     
 }
 
