@@ -38,7 +38,7 @@ export default {
 
 }
 .btn:hover{
-  filter:brightness(15%)
+  filter:brightness(100%)
 }
 
 /* Desktop */

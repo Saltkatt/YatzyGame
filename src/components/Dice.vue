@@ -14,6 +14,7 @@
      @click="onBtnClick" 
      v-bind:disabled="counter === 3"
       >Slå Tärning</button>
+    <button class="btn chooseDice"> Välj </button>
 
 </div>
     
@@ -26,9 +27,9 @@ export default {
     methods: {
 
         onBtnClick() {
+            // Calls on increaseCounter in storage
             this.$store.commit('increaseCounter')
             this.randomDice()
-
         },
 
          //Rolls random dice
@@ -113,10 +114,15 @@ div > div.field > div.locked {
     border: solid 2px black;
 }
 
+div > div.field > div.chosen{
+    background-color: greenyellow;
+    border: solid 2px black;
+}
+
 /* Button*/
 
-.rollDiceButton{
-    background-color: coral;
+.btn {
+    background-color: indigo;
     border-radius: 5px;
 }
 
