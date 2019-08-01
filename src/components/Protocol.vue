@@ -2,7 +2,7 @@
 <div>
     <div class="protocol-area">
         <div class="protocol-one">
-            <div class="grid-item 0"  @click="check(1)">Ettor: {{getCheck}} </div>
+            <div class="grid-item 0"  @click="check(1)">Ettor: {{getCheckValue}} </div>
             <div class="grid-item 1" >Tvåor:  </div>
             <div class="grid-item 2" >Treor:  </div>
             <div class="grid-item 3" >Fyror:  </div>
@@ -39,13 +39,14 @@ import { mapGetters } from 'vuex';
 export default {
     name: "Protocol",
     methods: {
+        
         //This function is used to check ones to sixes
         check: function(x) {
-        this.$store.commit('check', x);
-    },
+        this.$store.dispatch('check', x); 
+    }
 
     },
-    computed: {...mapGetters(['allDice', 'getRounds', 'getCheck'])}
+    computed: {...mapGetters(['allDice', 'getRounds', 'getCheckValue', 'getSavedDice'])}
 
 
 }

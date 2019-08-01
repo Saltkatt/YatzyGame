@@ -3,31 +3,31 @@ const state = {
     dice: [
         {
             id: 0,
-            value: 1,
+            value: 0,
             isLocked: false,
             selected: false
         },
         {
             id: 1,
-            value: 2,
+            value: 0,
             isLocked: false,
             selected: false
         },
         {
             id: 2,
-            value: 3,
+            value: 0,
             isLocked: false,
             selected: false
         },
         {
             id: 3,
-            value: 4,
+            value: 0,
             isLocked: false,
             selected: false
         },
         {
             id: 4,
-            value: 5,
+            value: 0,
             isLocked: false,
             selected: false
         }
@@ -165,7 +165,8 @@ const state = {
             isAvailable: true
         },
       ],
-
+      //Counts chooseButton clicks (0-1)
+      btnCounter: 0,
       //Dice roll counter (0-3).
       counter: 0,
       //Rounds (0-15)
@@ -183,17 +184,19 @@ const state = {
 }
 const getters = {
     allDice: (state) => state.dice,
+    btnCounter:(state) => state.btnCounter,
     counter: (state) => state.counter,
     getRounds: (state) => state.rounds,
     getSavedDice: (state) => state.savedDice,
-    getCheck: (state) => state.checkValue,
+    getCheckValue: (state) => state.checkValue,
 }
 const actions = {
     //Checks dice for ones.
-    checkValue: (context, x) => {
+    check: (context, x) => {
         var count = 0;
         var sum;
-        if(state.savedDice[i].value == x) {
+        var sD = context.state.savedDice;
+        if(sD[i].value == x) {
             for(var i = 0; i < state.savedDice.length; i++){
                 count++;
                 sum = count*x;
@@ -203,6 +206,8 @@ const actions = {
             context.commit('setCheckValue', payload);
             //Resets counter
             context.commit("resetCounter");
+            //Resets chooseButton counter
+            context.commit("resetBtnCounter");
             //Resets savedDice[]
             context.commit("resetSavedDice");
             //Adds to round
@@ -221,6 +226,12 @@ const mutations = {
     changeLock: (state, nr) => {
         state.dice[nr].isLocked = !state.dice[nr].isLocked;
     },
+    increaseBtnCounter: (state) => {
+        state.btnCounter++;
+    },
+    resetBtnCounter: (state) => {
+        state.btnCounter = 0;
+    },
     increaseCounter: (state) => {
         state.counter++;
     },
@@ -232,15 +243,8 @@ const mutations = {
     },
     // Adds locked dice to array.
     addToSavedDice: (state, payload) => {
-        for(var i = 0; i < state.dice.length; i++) {
-            if (state.dice[i].isLocked == false) {
-                continue
-            }
-            else{
-                state.savedDice.push(payload);
-                state.savedDice.sort();
-            }
-        }
+        state.savedDice.push(payload);
+        state.savedDice.sort();
     },
     // Resets savedDice[] to 0
     resetSavedDice: function (state) {

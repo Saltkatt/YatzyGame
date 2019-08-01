@@ -14,7 +14,11 @@
      @click="onBtnClick" 
      v-bind:disabled="counter === 3"
       >Slå Tärning</button>
-    <button class="btn chooseDice"> Välj </button>
+
+    <button class="btn chooseDice"
+    @click="onChooseBtnClick"
+    v-bind:disabled="btnCounter === 1"
+    > Välj </button>
 
 </div>
     
@@ -32,6 +36,11 @@ export default {
             this.randomDice()
         },
 
+        onChooseBtnClick(){
+            this.$store.commit('increaseBtnCounter')
+            this.saveDice()    
+        },
+
          //Rolls random dice
         randomDice(){
             //Iterates through dice array and chacks if dice are locked true/false.
@@ -45,13 +54,29 @@ export default {
 
         locked(id){
             this.$store.commit('changeLock', id ) 
+            
         },
+        saveDice(){
+            var sD = this.allDice
+            console.log(675)
+            for(var i = 0; i < sD.length; i++) {
+                if (sD[i].isLocked == true) {
+                    var payload = sD[i].value;
+                    this.$store.commit('addToSavedDice', payload)
+                }
+                else{
+                    continue
+                }
+            }
+        }
 
+       
 
     },
     computed: {...mapGetters([
     'allDice',
     'counter',
+    
     
     
     ])}
