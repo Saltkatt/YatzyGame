@@ -76,6 +76,7 @@ export default {
     computed: {...mapGetters([
     'allDice',
     'counter',
+    'btnCounter',
     
     
     
