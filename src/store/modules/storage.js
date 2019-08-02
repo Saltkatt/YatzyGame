@@ -201,16 +201,12 @@ const actions = {
         
         for(var i = 0; i < sD.length; i++){
             length = sD.length;
-            console.log(length)
-            console.log("before if", sD[i])
-
             if(sD[i] == x) {
                 sum = length*x;
                 var y = x - 1
-                console.log("before payload")
                 var payload = {index: y, summa: sum}
                 context.commit('setCheckValue', payload);
-                console.log("past first commit")
+                
             }
             else{
                 console.log("savedDice array content is not valid")
@@ -240,6 +236,12 @@ const mutations = {
     // Toggles the state of the dice (locked or not). 
     changeLock: (state, nr) => {
         state.dice[nr].isLocked = !state.dice[nr].isLocked;
+    },
+    changeAvailabilityOne: (state, id) => {
+        state.protocolOne[id].isAvailable = !state.protocolOne[id].isAvailable;
+    },
+    changeAvailabilityTwo: (state, id) => {
+        state.protocolTwo[id].isAvailable = !state.protocolTwo[id].isAvailable;
     },
     increaseBtnCounter: (state) => {
         state.btnCounter++;
