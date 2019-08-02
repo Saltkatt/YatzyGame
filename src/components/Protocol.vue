@@ -2,7 +2,7 @@
 <div>
     <div class="protocol-area">
         <div class="protocol-one">
-            <div class="grid-item 0"  @click="check(1)">Ettor: {{getCheckValue}} </div>
+            <div class="grid-item 0"  @click="check(1)">Ettor: {{getOnes}} </div>
             <div class="grid-item 1" >Tvåor:  </div>
             <div class="grid-item 2" >Treor:  </div>
             <div class="grid-item 3" >Fyror:  </div>
@@ -46,7 +46,7 @@ export default {
     }
 
     },
-    computed: {...mapGetters(['allDice', 'getRounds', 'getCheckValue', 'getSavedDice'])}
+    computed: {...mapGetters(['allDice', 'getRounds', 'getCheckValue', 'getSavedDice', 'getOnes'])}
 
 
 }

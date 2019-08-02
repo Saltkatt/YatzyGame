@@ -178,7 +178,7 @@ const state = {
       secondSum: 0,
 
       checkValue: 0,
-
+      
       savedDice: [],
 
 }
@@ -189,21 +189,35 @@ const getters = {
     getRounds: (state) => state.rounds,
     getSavedDice: (state) => state.savedDice,
     getCheckValue: (state) => state.checkValue,
+    getOnes: (state) => state.protocolOne[0].value,
+    
 }
 const actions = {
-    //Checks dice for ones.
+    //Checks dice for the value sent in as x.
     check: (context, x) => {
-        var count = 0;
+        var length;
         var sum;
         var sD = context.state.savedDice;
-        if(sD[i].value == x) {
-            for(var i = 0; i < state.savedDice.length; i++){
-                count++;
-                sum = count*x;
+        
+        for(var i = 0; i < sD.length; i++){
+            length = sD.length;
+            console.log(length)
+            console.log("before if", sD[i])
+
+            if(sD[i] == x) {
+                sum = length*x;
                 var y = x - 1
+                console.log("before payload")
                 var payload = {index: y, summa: sum}
+                context.commit('setCheckValue', payload);
+                console.log("past first commit")
             }
-            context.commit('setCheckValue', payload);
+            else{
+                console.log("savedDice array content is not valid")
+                //Add error message
+            }
+        
+            
             //Resets counter
             context.commit("resetCounter");
             //Resets chooseButton counter
@@ -212,6 +226,7 @@ const actions = {
             context.commit("resetSavedDice");
             //Adds to round
             context.commit("increaseRounds");
+
 
         }
     }
