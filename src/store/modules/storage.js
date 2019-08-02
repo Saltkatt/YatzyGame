@@ -190,30 +190,34 @@ const getters = {
     getSavedDice: (state) => state.savedDice,
     getCheckValue: (state) => state.checkValue,
     getOnes: (state) => state.protocolOne[0].value,
+    getTwos: (state) => state.protocolOne[1].value,
+    getThrees: (state) => state.protocolOne[2].value,
+    getFours: (state) => state.protocolOne[3].value,
+    getFives: (state) => state.protocolOne[4].value,
+    getSixes: (state) => state.protocolOne[5].value,
+    getSumPOne: (state) => state.protocolOne[6].value,
+    getBonus: (state) => state.protocolOne[7].value
     
 }
 const actions = {
     //Checks dice for the value sent in as x.
     check: (context, x) => {
-        var length;
-        var sum;
         var sD = context.state.savedDice;
-        
-        for(var i = 0; i < sD.length; i++){
-            length = sD.length;
-            if(sD[i] == x) {
-                sum = length*x;
-                var y = x - 1
-                var payload = {index: y, summa: sum}
-                context.commit('setCheckValue', payload);
-                
+        var count = 0;
+        var sum;
+        //Iterates each element in the array and counts all the dice in the array that are the same value as x.   
+        sD.forEach((element) => {
+            if(element.value == x){
+                count++;
             }
-            else{
-                console.log("savedDice array content is not valid")
-                //Add error message
-            }
-        
+            //The amount of dice of the correct value is then multiplied by the value of x.
+            sum = count*x;
+            var y = x - 1
+            var payload = {index: y, summa: sum}
+            context.commit('setCheckValue', payload);
             
+        });
+
             //Resets counter
             context.commit("resetCounter");
             //Resets chooseButton counter
@@ -222,10 +226,9 @@ const actions = {
             context.commit("resetSavedDice");
             //Adds to round
             context.commit("increaseRounds");
+    },
 
-
-        }
-    }
+  
 };
 const mutations = {
     // This function rolls tha dice and allows it to roll three times.
@@ -236,6 +239,11 @@ const mutations = {
     // Toggles the state of the dice (locked or not). 
     changeLock: (state, nr) => {
         state.dice[nr].isLocked = !state.dice[nr].isLocked;
+    },
+    resetIsLocked: (state) => {
+        for(let i = 0; i < state.dice.length; i++){
+            state.dice[i].isLocked = false;
+        }
     },
     changeAvailabilityOne: (state, id) => {
         state.protocolOne[id].isAvailable = !state.protocolOne[id].isAvailable;
@@ -268,6 +276,12 @@ const mutations = {
         state.savedDice.length = 0;
 
     },
+    resetDiceValue: (state) => {
+        for(let i = 0; i < state.dice.length; i++){
+            state.dice[i].value = 0;
+        }
+    },
+    //
     setCheckValue: (state, payload) => {
         let index = payload.index
         state.protocolOne[index].value = payload.summa

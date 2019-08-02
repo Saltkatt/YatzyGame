@@ -38,37 +38,45 @@ export default {
 
         onChooseBtnClick(){
             this.$store.commit('increaseBtnCounter')
-            this.saveDice()    
+            this.saveDice()  
+            this.unLockDice()  
         },
 
-         //Rolls random dice
+         
+        /*
+        Iterates through dice array and checks if dice are locked true/false.
+        If the dice are not locked they can be rolled and are sent to rollDice in storage.
+        */ 
         randomDice(){
-            //Iterates through dice array and chacks if dice are locked true/false.
             this.allDice.forEach((element, index) => {
                if(element.isLocked == false) {
                  this.$store.commit('rollDice', index);  
                }
-               
             });
         },
 
+        /* Sends dice id to changeLock in storage to change isLocked to true/false. */
         locked(id){
             this.$store.commit('changeLock', id ) 
-            
         },
+
+       
+        /* 
+        Iterates through the dice array to check for locked dice.
+        Sends the locked dice to the savedDice array in storage. 
+        */
         saveDice(){
             var sD = this.allDice
-            console.log(675)
             for(var i = 0; i < sD.length; i++) {
                 if (sD[i].isLocked == true) {
-                    var payload = sD[i].value;
+                    var payload = sD[i];
                     this.$store.commit('addToSavedDice', payload)
                 }
                 else{
                     continue
                 }
             }
-        }
+        },
 
        
 

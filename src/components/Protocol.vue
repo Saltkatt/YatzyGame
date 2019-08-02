@@ -2,14 +2,14 @@
 <div>
     <div class="protocol-area">
         <div class="protocol-one">
-            <div class="grid-item 0"  @click="check(1)">Ettor: {{getOnes}} </div>
-            <div class="grid-item 1" >Tvåor:  </div>
-            <div class="grid-item 2" >Treor:  </div>
-            <div class="grid-item 3" >Fyror:  </div>
-            <div class="grid-item 4" >Femor:  </div>
-            <div class="grid-item 5" >Sexor:  </div>
-            <div class="grid-item 6" >Summa: </div>
-            <div class="grid-item 7" >Bonus: </div>
+            <div class="grid-item 0"  @click="onProtocolClick(1)">Ettor: {{getOnes}} </div>
+            <div class="grid-item 1"  @click="onProtocolClick(2)">Tvåor: {{getTwos}}  </div>
+            <div class="grid-item 2"  @click="onProtocolClick(3)">Treor: {{getThrees}} </div>
+            <div class="grid-item 3"  @click="onProtocolClick(4)">Fyror: {{getFours}} </div>
+            <div class="grid-item 4"  @click="onProtocolClick(5)">Femor: {{getFives}} </div>
+            <div class="grid-item 5"  @click="onProtocolClick(6)">Sexor: {{getSixes}} </div>
+            <div class="grid-item 6" >Summa: {{getSumPOne}} </div>
+            <div class="grid-item 7" >Bonus: {{getBonus}} </div>
         </div>
         <div class="protocol-two">
             <div class="grid-item 8" >Ett par:  </div>
@@ -39,14 +39,44 @@ import { mapGetters } from 'vuex';
 export default {
     name: "Protocol",
     methods: {
+
+        onProtocolClick(x){
+            this.check(x);
+            this.unLock();
+            this.resetDiceValue();
+        },
         
         //This function is used to check ones to sixes
         check: function(x) {
-        this.$store.dispatch('check', x); 
-    }
+            this.$store.dispatch('check', x); 
+        },
+
+        unLock(){
+            this.$store.commit('resetIsLocked');
+        },
+
+        resetDiceValue(){
+            this.$store.commit('resetDiceValue');
+        }
+         
+
 
     },
-    computed: {...mapGetters(['allDice', 'getRounds', 'getCheckValue', 'getSavedDice', 'getOnes'])}
+    computed: {...mapGetters([
+        'allDice', 
+        'getRounds', 
+        'getCheckValue', 
+        'getSavedDice', 
+        'getOnes',
+        'getTwos',
+        'getThrees',
+        'getFours',
+        'getFives',
+        'getSixes',
+        'getSumPOne',
+        'getBonus',
+        
+        ])}
 
 
 }
