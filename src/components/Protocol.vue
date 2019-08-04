@@ -2,7 +2,7 @@
 <div>
     <div class="protocol-area">
         <div class="protocol-one">
-            <div class="grid-item 0"  @click="onProtocolClick(1)">Ettor: {{getOnes}} </div>
+            <div class="grid-item 0"  @click="onProtocolClick(1)" v-bind:class="{chosen:getProtocolOne[0].isAvailable}" >Ettor: {{getOnes}} </div>
             <div class="grid-item 1"  @click="onProtocolClick(2)">Tvåor: {{getTwos}}  </div>
             <div class="grid-item 2"  @click="onProtocolClick(3)">Treor: {{getThrees}} </div>
             <div class="grid-item 3"  @click="onProtocolClick(4)">Fyror: {{getFours}} </div>
@@ -44,6 +44,7 @@ export default {
             this.check(x);
             this.unLock();
             this.resetDiceValue();
+            this.lock(x)
         },
         
         //This function is used to check ones to sixes
@@ -57,13 +58,29 @@ export default {
 
         resetDiceValue(){
             this.$store.commit('resetDiceValue');
-        }
-         
+        },
 
+          //Changes colour of grid element to lightgreen
+        chooseValue(id){
+            
+            this.getProtocolOne.forEach((element, id) => {
+                
+                if(element.isAvailable == false){
+                    this.$store.commit('selectOne', id)
+                }
+            });
+        },
+
+        lock(x){
+            var id = x - 1;
+            this.$store.commit('chooseOne', id ) 
+        },
 
     },
     computed: {...mapGetters([
         'allDice', 
+        'getProtocolOne',
+        'getProtocolTwo',
         'getRounds', 
         'getCheckValue', 
         'getSavedDice', 
@@ -107,6 +124,7 @@ export default {
     color: black; 
     padding: 10px;
     grid-area: rec;
+    cursor:pointer;
 }
 /* Protocol Area Two*/
 .protocol-two {
@@ -115,6 +133,7 @@ export default {
     color: black; 
     padding: 10px;
     grid-area: rec;
+    cursor:pointer;
 }
 
  /* Individual grid items inside the record grid */
@@ -148,12 +167,22 @@ export default {
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
 }
 
+.protocol-one > div.chosen{
+     background-color:lightgreen;
+     pointer-events: none;
+}
+
 /* Mobile */
 
 @media screen and (max-width: 500px) {
     .protocol-area{
         width: 100%;
     }
+
+    .protocol-one > div.chosen{
+     background-color:lightgreen;
+     pointer-events: none;
+}
     
 }
 

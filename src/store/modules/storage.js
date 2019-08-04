@@ -183,6 +183,8 @@ const state = {
 
 }
 const getters = {
+    getProtocolOne: (state) => state.protocolOne,
+    getProtocolTwo: (state) => state.protocolTwo,
     allDice: (state) => state.dice,
     btnCounter:(state) => state.btnCounter,
     counter: (state) => state.counter,
@@ -196,7 +198,8 @@ const getters = {
     getFives: (state) => state.protocolOne[4].value,
     getSixes: (state) => state.protocolOne[5].value,
     getSumPOne: (state) => state.protocolOne[6].value,
-    getBonus: (state) => state.protocolOne[7].value
+    getBonus: (state) => state.protocolOne[7].value,
+    
     
 }
 const actions = {
@@ -205,19 +208,24 @@ const actions = {
         var sD = context.state.savedDice;
         var count = 0;
         var sum;
+        //var protocol = context.state.protocolOne[y].isAvailable;
+
         //Iterates each element in the array and counts all the dice in the array that are the same value as x.   
         sD.forEach((element) => {
             if(element.value == x){
-                count++;
-            }
-            //The amount of dice of the correct value is then multiplied by the value of x.
-            sum = count*x;
-            var y = x - 1
-            var payload = {index: y, summa: sum}
-            context.commit('setCheckValue', payload);
-            
+            count++;
+        }
+        //The amount of dice of the correct value is then multiplied by the value of x.
+        sum = count*x;
+        var y = x - 1
+        var payload = {index: y, summa: sum}
+   
+        context.commit('setCheckValue', payload);
+        context.commit('changeAvailabilityOne', y);
+    
         });
-
+    
+        
             //Resets counter
             context.commit("resetCounter");
             //Resets chooseButton counter
@@ -240,29 +248,39 @@ const mutations = {
     changeLock: (state, nr) => {
         state.dice[nr].isLocked = !state.dice[nr].isLocked;
     },
+    // Resets isLocked to false.
     resetIsLocked: (state) => {
         for(let i = 0; i < state.dice.length; i++){
             state.dice[i].isLocked = false;
         }
     },
-    changeAvailabilityOne: (state, id) => {
+    chooseOne: (state, id) => {
         state.protocolOne[id].isAvailable = !state.protocolOne[id].isAvailable;
     },
     changeAvailabilityTwo: (state, id) => {
-        state.protocolTwo[id].isAvailable = !state.protocolTwo[id].isAvailable;
+        state.protocolTwo[id].isAvailable = false;
     },
+    selectOne: (state, id) => {
+        state.protocolOne[id].selected = !state.protocolOne[id].selected;
+    },
+
+    // Increase choose button counter
     increaseBtnCounter: (state) => {
         state.btnCounter++;
     },
+    // Resets choose button counter
     resetBtnCounter: (state) => {
         state.btnCounter = 0;
     },
+    // Increases counter
     increaseCounter: (state) => {
         state.counter++;
     },
+    // Resets counter
     resetCounter: (state) => {
         state.counter = 0;
     },
+    // Increases rounds
     increaseRounds: (state) => {
         state.rounds++;
     },
@@ -276,12 +294,13 @@ const mutations = {
         state.savedDice.length = 0;
 
     },
+    // Resets dice values to 0
     resetDiceValue: (state) => {
         for(let i = 0; i < state.dice.length; i++){
             state.dice[i].value = 0;
         }
     },
-    //
+    // Receives payload index position and value
     setCheckValue: (state, payload) => {
         let index = payload.index
         state.protocolOne[index].value = payload.summa
