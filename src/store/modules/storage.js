@@ -41,6 +41,7 @@ const state = {
             value: null, 
             selected: false,
             isChosen: false,
+            pass: false,
         },
         {
             id: 2, 
@@ -48,6 +49,7 @@ const state = {
             value: null, 
             selected: false,
             isChosen: false,
+            pass: false,
         },
         {
             id: 3, 
@@ -55,6 +57,7 @@ const state = {
             value: null, 
             selected: false,
             isChosen: false,
+            pass: false,
         },
         {
             id: 4, 
@@ -62,6 +65,7 @@ const state = {
             value: null, 
             selected: false,
             isChosen: false,
+            pass: false,
         },
         {
             id: 5, 
@@ -69,6 +73,7 @@ const state = {
             value: null, 
             selected: false,
             isChosen: false,
+            pass: false,
         },
         {
             id: 6, 
@@ -76,6 +81,7 @@ const state = {
             value: null, 
             selected: false,
             isChosen: false,
+            pass: false,
         },
         {
             id: 7, 
@@ -83,6 +89,7 @@ const state = {
             value: null, 
             selected: false,
             isChosen: false,
+            pass: false,
         },
         {
             id: 8, 
@@ -90,6 +97,7 @@ const state = {
             value: null, 
             selected: false,
             isChosen: false,
+            pass: false,
         },
       ],
       // Array for protocol two.
@@ -100,6 +108,7 @@ const state = {
             value: null, 
             selected: false,
             isChosen: false,
+            pass: false,
         },
         {
             id: 2, 
@@ -107,6 +116,7 @@ const state = {
             value: null, 
             selected: false,
             isChosen: false,
+            pass: false,
         },
         {
             id: 3, 
@@ -114,6 +124,7 @@ const state = {
             value: null, 
             selected: false,
             isChosen: false,
+            pass: false,
         },
         {
             id: 4, 
@@ -121,6 +132,7 @@ const state = {
             value: null, 
             selected: false,
             isChosen: false,
+            pass: false,
         },
         {
             id: 5, 
@@ -128,6 +140,7 @@ const state = {
             value: null, 
             selected: false,
             isChosen: false,
+            pass: false,
         },
         {
             id: 6, 
@@ -135,6 +148,7 @@ const state = {
             value: null, 
             selected: false,
             isChosen: false,
+            pass: false,
         },
         {
             id: 7, 
@@ -142,6 +156,7 @@ const state = {
             value: null, 
             selected: false,
             isChosen: false,
+            pass: false,
         },
         {
             id: 8, 
@@ -149,6 +164,7 @@ const state = {
             value: null, 
             selected: false,
             isChosen: false,
+            pass: false,
         },
         {
             id: 9, 
@@ -156,6 +172,7 @@ const state = {
             value: null, 
             selected: false,
             isChosen: false,
+            pass: false,
         },
         {
             id: 10, 
@@ -163,6 +180,7 @@ const state = {
             value: 0, 
             selected: false,
             isChosen: false,
+            pass: false,
         },
       ],
       //Counts chooseButton clicks (0-1)
@@ -197,9 +215,7 @@ const getters = {
     getSixes: (state) => state.protocolOne[5].value,
     getSumPOne: (state) => state.protocolOne[6].value,
     getBonus: (state) => state.protocolOne[7].value,
-    
-    
-    
+
 }
 const actions = {
     //Checks dice for the value sent in as x.
@@ -209,8 +225,7 @@ const actions = {
         var sum = 0;
         var y = x - 1;
         var payload = null;
-        //var protocol = context.state.protocolOne[y].isAvailable;
-
+        
         //Iterates each element in the array and counts all the dice in the array that are the same value as x.   
         sD.forEach((element) => {
             if(element.value == x){
@@ -221,14 +236,11 @@ const actions = {
         payload = {index: y, summa: sum};
    
         context.commit('setCheckValue', payload);
-        //context.commit('chooseOne', y);
-        
-        
-    
-        });
 
-        context.commit('addToSumInProtocolOne', payload )
-        console.log('mutation:' + payload.summa)
+        });
+            // Sends payload to mutation addToSumInProtocolOne.
+            context.commit('addToSumInProtocolOne', payload )
+        
             //Resets counter
             context.commit("resetCounter");
             //Resets chooseButton counter
@@ -237,9 +249,12 @@ const actions = {
             context.commit("resetSavedDice");
             //Adds to round
             context.commit("increaseRounds");
-            
-            
+            // Checks if bouns should be added.
+            context.commit("addBonus");
+             
     },
+
+    
   
 };
 const mutations = {
@@ -262,6 +277,7 @@ const mutations = {
     chooseOne: (state, id) => {
         state.protocolOne[id].isChosen = !state.protocolOne[id].isChosen;
     },
+    // Toggles protocolTwo variable isChosen (true/false)
     chooseTwo: (state, id) => {
         state.protocolTwo[id].isChosen = !state.protocolTwo[id].isChosen;
     },
@@ -270,6 +286,14 @@ const mutations = {
     },
     selectTwo: (state, id) => {
         state.protocolTwo[id].selected = !state.protocolTwo[id].selected;
+    },
+
+    passOne: (state, id) => {
+        state.protocolOne[id].pass = !state.protocolOne[id].pass;
+    },
+
+    passTwo: (state, id) => {
+        state.protocolTwo[id].pass = !state.protocolTwo[id].pass;
     },
 
     // Increase choose button counter
@@ -313,16 +337,16 @@ const mutations = {
         let index = payload.index
         state.protocolOne[index].value = payload.summa
     },
+    /* Receives payload from check function and adds new payload.summa to the current value of protocolOne Total.*/
     addToSumInProtocolOne: (state, payload) => {
-
         state.protocolOne[6].value += payload.summa;
         
     },
-
+    /* Checks if the bonus of 50 points should be added. */
     addBonus: (state) => {
-        state.protocolOne[7].value = 50;
+        var score = state.protocolOne[6].value;
         if(score >= 63) {
-            
+            state.protocolOne[7].value = 50;
         }
     }
     

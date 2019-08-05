@@ -49,7 +49,7 @@ export default {
     text-decoration: none;
     display: inline-block;
     font-size: 16px;
-    margin: 4px 2px;
+    margin: 10px 5px; 
     cursor: pointer;
     width: 60px;
 }
