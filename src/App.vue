@@ -19,16 +19,25 @@ export default {
 </script>
 
 <style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  
-  background-image: url("./assets/wood-table.jpg");
-}
+/* Desktop */
+@media screen and (min-width: 501px){
+  body{
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0px;
+    background-image: url("./assets/wood-table.jpg");
+    /* background-size: cover; */
 
+  }
+
+  #app {
+    text-align: center;
+    color: #2c3e50;
+  
+  }
+  
+}
 
 .btn{
   background-color:sienna;
@@ -41,14 +50,23 @@ export default {
   filter:brightness(100%)
 }
 
-/* Desktop */
-@media screen and (min-width: 501px){
-
-
-}
 
 /* Small Screen */
 @media screen and (max-width: 500px){
+  body{
+    font-family: 'Avenir', Helvetica, Arial, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    margin: 0px;
+    background-image: url("./assets/wood-table.jpg");
+    /* background-size: cover; */
+
+  }
+
+  #app {
+    text-align: center;
+    color: #2c3e50;
   
+  }
 }
 </style>
