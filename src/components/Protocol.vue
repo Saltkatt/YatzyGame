@@ -3,24 +3,24 @@
     <div class="protocol-area">
         <div class="protocol-one">
             <div class="grid-item 0"  @click="onProtocolClick(1)" v-bind:class="{chosen:getProtocolOne[0].isChosen}" >Ettor: {{getOnes}} </div>
-            <div class="grid-item 1"  @click="onProtocolClick(2)">Tvåor: {{getTwos}}  </div>
-            <div class="grid-item 2"  @click="onProtocolClick(3)">Treor: {{getThrees}} </div>
-            <div class="grid-item 3"  @click="onProtocolClick(4)">Fyror: {{getFours}} </div>
-            <div class="grid-item 4"  @click="onProtocolClick(5)">Femor: {{getFives}} </div>
-            <div class="grid-item 5"  @click="onProtocolClick(6)">Sexor: {{getSixes}} </div>
+            <div class="grid-item 1"  @click="onProtocolClick(2)" v-bind:class="{chosen:getProtocolOne[1].isChosen}">Tvåor: {{getTwos}}  </div>
+            <div class="grid-item 2"  @click="onProtocolClick(3)" v-bind:class="{chosen:getProtocolOne[2].isChosen}">Treor: {{getThrees}} </div>
+            <div class="grid-item 3"  @click="onProtocolClick(4)" v-bind:class="{chosen:getProtocolOne[3].isChosen}">Fyror: {{getFours}} </div>
+            <div class="grid-item 4"  @click="onProtocolClick(5)" v-bind:class="{chosen:getProtocolOne[4].isChosen}">Femmor: {{getFives}} </div>
+            <div class="grid-item 5"  @click="onProtocolClick(6)" v-bind:class="{chosen:getProtocolOne[5].isChosen}">Sexor: {{getSixes}} </div>
             <div class="grid-item 6" >Summa: {{getSumPOne}} </div>
             <div class="grid-item 7" >Bonus: {{getBonus}} </div>
         </div>
         <div class="protocol-two">
-            <div class="grid-item 8" >Ett par:  </div>
-            <div class="grid-item 9" >Två par: </div>
-            <div class="grid-item 10" >Tretal:  </div>
-            <div class="grid-item 11" >Fyrtal:  </div>
-            <div class="grid-item 12" >Liten Stege: </div>
-            <div class="grid-item 13" >Stor Stege: </div>
-            <div class="grid-item 14" >Kåk: </div>
-            <div class="grid-item 15" >Chans: </div>
-            <div class="grid-item 16" >YATZY:  </div>
+            <div class="grid-item 8" @click="onProtocolClick(9)" v-bind:class="{chosen:getProtocolTwo[8].isChosen}">Ett par:  </div>
+            <div class="grid-item 9" @click="onProtocolClick(10)">Två par: </div>
+            <div class="grid-item 10" @click="onProtocolClick(11)">Tretal:  </div>
+            <div class="grid-item 11" @click="onProtocolClick(12)">Fyrtal:  </div>
+            <div class="grid-item 12" @click="onProtocolClick(13)">Liten Stege: </div>
+            <div class="grid-item 13" @click="onProtocolClick(14)">Stor Stege: </div>
+            <div class="grid-item 14" @click="onProtocolClick(15)">Kåk: </div>
+            <div class="grid-item 15" @click="onProtocolClick(16)">Chans: </div>
+            <div class="grid-item 16" @click="onProtocolClick(17)">YATZY:  </div>
             <div class="grid-item 17" >Totalt: </div>
 
         </div>
@@ -44,8 +44,15 @@ export default {
             this.check(x);
             this.unLock();
             this.resetDiceValue();
-            this.chooseValue();
-            this.lock(x)
+            this.chooseValueInProtocolOne();
+            this.lockProtocolOne(x)
+        },
+
+        onProtocolTwoClick(x){
+            this.unLock();
+            this.resetDiceValue();
+            this.chooseValueInProtocolTwo();
+            this.lockProtocolTwo(x);
         },
         
         //This function is used to check ones to sixes
@@ -53,29 +60,42 @@ export default {
             this.$store.dispatch('check', x); 
         },
 
+        // Unlocks locked dice.
         unLock(){
             this.$store.commit('resetIsLocked');
         },
 
+        // Resets dice values to zero.
         resetDiceValue(){
             this.$store.commit('resetDiceValue');
         },
 
-          //Changes colour of grid element to lightgreen
-        chooseValue(){
-            // var id = x - 1;
+          //Changes colour of grid element in protocol-one to lightgreen
+        chooseValueInProtocolOne(){
             this.getProtocolOne.forEach((element, id) => {
-                
                 if(element.isChosen == true){
                     this.$store.commit('selectOne', id)
                 }
             });
         },
+        //Changes colour of grid element in protocol-two to lightgreen
+        chooseValueInProtocolTwo(){
+             this.getProtocolTwo.forEach((element, id) => {
+                if(element.isChosen == true){
+                    this.$store.commit('selectTwo', id)
+                }
+            });
+        },
 
-        lock(x){
+        lockProtocolOne(x){
             var id = x - 1;
             this.$store.commit('chooseOne', id ) 
         },
+
+        lockProtocolTwo(x){
+            var id = x -1;
+            this.$store.commit('chooseTwo', id )
+        }
 
     },
     computed: {...mapGetters([

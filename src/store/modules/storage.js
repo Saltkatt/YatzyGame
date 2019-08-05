@@ -172,8 +172,6 @@ const state = {
       //Rounds (0-15)
       rounds: 0,
       
-      //Sum of protocol area one.
-      firstSum: 0,
       //Sum of protocol area two.
       secondSum: 0,
 
@@ -201,13 +199,16 @@ const getters = {
     getBonus: (state) => state.protocolOne[7].value,
     
     
+    
 }
 const actions = {
     //Checks dice for the value sent in as x.
     check: (context, x) => {
         var sD = context.state.savedDice;
         var count = 0;
-        var sum;
+        var sum = 0;
+        var y = x - 1;
+        var payload = null;
         //var protocol = context.state.protocolOne[y].isAvailable;
 
         //Iterates each element in the array and counts all the dice in the array that are the same value as x.   
@@ -217,15 +218,17 @@ const actions = {
         }
         //The amount of dice of the correct value is then multiplied by the value of x.
         sum = count*x;
-        var y = x - 1
-        var payload = {index: y, summa: sum}
+        payload = {index: y, summa: sum};
    
         context.commit('setCheckValue', payload);
-        context.commit('changeAvailabilityOne', y);
+        //context.commit('chooseOne', y);
+        
+        
     
         });
-    
-        
+
+        context.commit('addToSumInProtocolOne', payload )
+        console.log('mutation:' + payload.summa)
             //Resets counter
             context.commit("resetCounter");
             //Resets chooseButton counter
@@ -234,8 +237,9 @@ const actions = {
             context.commit("resetSavedDice");
             //Adds to round
             context.commit("increaseRounds");
+            
+            
     },
-
   
 };
 const mutations = {
@@ -254,6 +258,7 @@ const mutations = {
             state.dice[i].isLocked = false;
         }
     },
+    // Toggles protocolOne variable isChosen (true/false)
     chooseOne: (state, id) => {
         state.protocolOne[id].isChosen = !state.protocolOne[id].isChosen;
     },
@@ -308,6 +313,18 @@ const mutations = {
         let index = payload.index
         state.protocolOne[index].value = payload.summa
     },
+    addToSumInProtocolOne: (state, payload) => {
+
+        state.protocolOne[6].value += payload.summa;
+        
+    },
+
+    addBonus: (state) => {
+        state.protocolOne[7].value = 50;
+        if(score >= 63) {
+            
+        }
+    }
     
 
 

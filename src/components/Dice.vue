@@ -39,7 +39,6 @@ export default {
         onChooseBtnClick(){
             this.$store.commit('increaseBtnCounter')
             this.saveDice()  
-            this.unLockDice()  
         },
 
          
