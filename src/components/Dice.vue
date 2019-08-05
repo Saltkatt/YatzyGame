@@ -20,6 +20,8 @@
     v-bind:disabled="btnCounter === 1"
     > Välj </button>
 
+    <button class="btn passButton" >Stryka</button>
+
 </div>
     
 </template>
@@ -98,9 +100,11 @@ export default {
 
 /* Playing field */
 .field{
+    background-color: lightblue;
     justify-content: space-evenly;
     align-items: center;
     padding:10px;
+    border-radius: 15px;
 }
 
 .field > div{
@@ -122,23 +126,23 @@ export default {
 }
 
 .field div:nth-child(1) {
-    background-color: green;
+    background-color: ivory;
     cursor: pointer;
 }
 .field div:nth-child(2) {
-    background-color: gold;
+    background-color: ivory;
     cursor: pointer;
 }
 .field div:nth-child(3) {
-    background-color: blue;
+    background-color: ivory;
     cursor: pointer;
 }
 .field div:nth-child(4) {
-    background-color: deeppink;
+    background-color: ivory;
     cursor: pointer;
 }
 .field div:nth-child(5) {
-    background-color:lime;
+    background-color:ivory;
     cursor: pointer;
 } 
 
