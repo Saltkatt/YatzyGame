@@ -40,56 +40,56 @@ const state = {
             name: 'Aces', 
             value: null, 
             selected: false,
-            isAvailable: true
+            isChosen: false,
         },
         {
             id: 2, 
             name: 'Twos', 
             value: null, 
             selected: false,
-            isAvailable: true
+            isChosen: false,
         },
         {
             id: 3, 
             name: 'Threes', 
             value: null, 
             selected: false,
-            isAvailable: true
+            isChosen: false,
         },
         {
             id: 4, 
             name: 'Fours', 
             value: null, 
             selected: false,
-            isAvailable: true
+            isChosen: false,
         },
         {
             id: 5, 
             name: 'Fives', 
             value: null, 
             selected: false,
-            isAvailable: true
+            isChosen: false,
         },
         {
             id: 6, 
             name: 'Sixes', 
             value: null, 
             selected: false,
-            isAvailable: true
+            isChosen: false,
         },
         {
             id: 7, 
             name: 'Total', 
             value: null, 
             selected: false,
-            isAvailable: true
+            isChosen: false,
         },
         {
             id: 8, 
             name: 'Bonus', 
             value: null, 
             selected: false,
-            isAvailable: true
+            isChosen: false,
         },
       ],
       // Array for protocol two.
@@ -99,70 +99,70 @@ const state = {
             name: 'Pair', 
             value: null, 
             selected: false,
-            isAvailable: true
+            isChosen: false,
         },
         {
             id: 2, 
             name: 'Two Pairs', 
             value: null, 
             selected: false,
-            isAvailable: true
+            isChosen: false,
         },
         {
             id: 3, 
             name: 'Three Of A Kind', 
             value: null, 
             selected: false,
-            isAvailable: true
+            isChosen: false,
         },
         {
             id: 4, 
             name: 'Four Of A Kind', 
             value: null, 
             selected: false,
-            isAvailable: true
+            isChosen: false,
         },
         {
             id: 5, 
             name: 'Full House', 
             value: null, 
             selected: false,
-            isAvailable: true
+            isChosen: false,
         },
         {
             id: 6, 
             name: 'Small Straight', 
             value: null, 
             selected: false,
-            isAvailable: true
+            isChosen: false,
         },
         {
             id: 7, 
             name: 'Big Straight', 
             value: null, 
             selected: false,
-            isAvailable: true
+            isChosen: false,
         },
         {
             id: 8, 
             lname: 'Yatzy', 
             value: null, 
             selected: false,
-            isAvailable: true
+            isChosen: false,
         },
         {
             id: 9, 
             name: 'Chance', 
             value: null, 
             selected: false,
-            isAvailable: true
+            isChosen: false,
         },
         {
             id: 10, 
             name: 'Total', 
             value: 0, 
             selected: false,
-            isAvailable: true
+            isChosen: false,
         },
       ],
       //Counts chooseButton clicks (0-1)
@@ -255,13 +255,16 @@ const mutations = {
         }
     },
     chooseOne: (state, id) => {
-        state.protocolOne[id].isAvailable = !state.protocolOne[id].isAvailable;
+        state.protocolOne[id].isChosen = !state.protocolOne[id].isChosen;
     },
-    changeAvailabilityTwo: (state, id) => {
-        state.protocolTwo[id].isAvailable = false;
+    chooseTwo: (state, id) => {
+        state.protocolTwo[id].isChosen = !state.protocolTwo[id].isChosen;
     },
     selectOne: (state, id) => {
         state.protocolOne[id].selected = !state.protocolOne[id].selected;
+    },
+    selectTwo: (state, id) => {
+        state.protocolTwo[id].selected = !state.protocolTwo[id].selected;
     },
 
     // Increase choose button counter

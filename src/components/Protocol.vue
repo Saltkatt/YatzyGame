@@ -2,7 +2,7 @@
 <div>
     <div class="protocol-area">
         <div class="protocol-one">
-            <div class="grid-item 0"  @click="onProtocolClick(1)" v-bind:class="{chosen:getProtocolOne[0].isAvailable}" >Ettor: {{getOnes}} </div>
+            <div class="grid-item 0"  @click="onProtocolClick(1)" v-bind:class="{chosen:getProtocolOne[0].isChosen}" >Ettor: {{getOnes}} </div>
             <div class="grid-item 1"  @click="onProtocolClick(2)">Tvåor: {{getTwos}}  </div>
             <div class="grid-item 2"  @click="onProtocolClick(3)">Treor: {{getThrees}} </div>
             <div class="grid-item 3"  @click="onProtocolClick(4)">Fyror: {{getFours}} </div>
@@ -44,6 +44,7 @@ export default {
             this.check(x);
             this.unLock();
             this.resetDiceValue();
+            this.chooseValue();
             this.lock(x)
         },
         
@@ -61,11 +62,11 @@ export default {
         },
 
           //Changes colour of grid element to lightgreen
-        chooseValue(id){
-            
+        chooseValue(){
+            // var id = x - 1;
             this.getProtocolOne.forEach((element, id) => {
                 
-                if(element.isAvailable == false){
+                if(element.isChosen == true){
                     this.$store.commit('selectOne', id)
                 }
             });
