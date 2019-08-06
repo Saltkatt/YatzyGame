@@ -235,22 +235,19 @@ const actions = {
         var sum = 0;
         var y = x - 1;
         var payload = null;
-        
-        //Iterates each element in the array and counts all the dice in the array that are the same value as x.   
-        sD.forEach((element) => {
-            if(element.value == x){
-            count++;
-        }
-        //The amount of dice of the correct value is then multiplied by the value of x.
-        sum = count*x;
-        payload = {index: y, summa: sum};
+            //Iterates each element in the array and counts all the dice in the array that are the same value as x.   
+            sD.forEach((element) => {
+                if(element.value == x){
+                count++;
+            }
+            //The amount of dice of the correct value is then multiplied by the value of x.
+            sum = count*x;
+            payload = {index: y, summa: sum};
    
-        context.commit('setCheckValue', payload);
-
+            context.commit('setCheckValue', payload);
         });
-            // Sends payload to mutation addToSumInProtocolOne.
+            //Sends payload to mutation addToSumInProtocolOne.
             context.commit('addToSumInProtocolOne', payload )
-        
             //Resets counter
             context.commit("resetCounter");
             //Resets chooseButton counter
@@ -259,12 +256,122 @@ const actions = {
             context.commit("resetSavedDice");
             //Adds to round
             context.commit("increaseRounds");
-            // Checks if bouns should be added.
+            // Checks if bonus should be added.
             context.commit("addBonus");
-             
     },
 
-  
+    //This function contains a switch-statement used activate the correct function for the chosen protocolTwo item.
+    checkProtocolTwo: (context, x) => {
+        switch(x) {
+            case 1:
+                context.dispatch('pair');
+                break;
+            case 2:
+                context.dispatch('twoPair');
+                break;
+            case 3:
+                context.dispatch('threeOfAKind');
+                break;
+            case 4:
+                break;
+            case 5:
+                break;
+            case 6:
+                break;
+
+        
+        
+        }   
+    },
+
+    pair: (context) => {
+      var sD = context.state.savedDice;
+
+      function result(nr) {
+          return sD.filter(function(dice) {
+              return dice.value == nr;
+          });
+      }
+      for (let i = 1; i <= 6; i++) {
+          var x = result(i);
+          if (x.length == 2) {
+              var summa = x[0].value * 2;
+              context.commit('setPairSum', summa)
+          }
+      }
+      //Resets counter
+      context.commit("resetCounter");
+      //Resets chooseButton counter
+      context.commit("resetBtnCounter");
+      //Resets savedDice[]
+      context.commit("resetSavedDice");
+      //Adds to round
+      context.commit("increaseRounds");
+    },
+
+    //Filters and loops through values to check for pairs, uses a counter to check the amount of pairs.
+    twoPair(context){
+        var sD = context.state.savedDice;      
+        function result(nr) {
+            return sD.filter(function(dice) {
+                return dice.value == nr;
+            });
+        }
+        //Pair counter
+        var pairsFound = 0;
+        var sum = 0;
+        //Loops through values 1 through 6
+        for (let i = 1; i <= 6; i++) {
+            // x = value in filtered array
+            var x = result(i);
+            // check if there are 2 values that are the same
+            if (x.length == 2) {
+                // count pair
+                pairsFound ++;
+                // sum equals and adds the pair value
+                sum += x[0].value * 2;
+                // if there are two pairs send to store
+                if (pairsFound == 2) {
+                context.commit('setTwoPairs', sum);
+                }
+            }
+        }
+        //Resets counter
+        context.commit("resetCounter");
+        //Resets chooseButton counter
+        context.commit("resetBtnCounter");
+        //Resets savedDice[]
+        context.commit("resetSavedDice");
+        //Adds to round
+        context.commit("increaseRounds");
+    },
+
+    threeOfAKind(context) {
+        var sD = context.state.savedDice; 
+            function result(nr) {
+                return sD.filter(function(dice) {
+                    return dice.value == nr;
+                });
+            }
+            for (let i = 1; i <= 6; i++) {
+                var x = result(i);
+                if (x.length == 3) {
+                    var summa = x[0].value * 3;
+                    context.commit('setThreeOfAKind', summa);
+                }
+            }
+        //Resets counter
+        context.commit("resetCounter");
+        //Resets chooseButton counter
+        context.commit("resetBtnCounter");
+        //Resets savedDice[]
+        context.commit("resetSavedDice");
+        //Adds to round
+        context.commit("increaseRounds");
+
+    },
+
+    
 };
 const mutations = {
     // This function rolls tha dice and allows it to roll three times.
@@ -357,6 +464,17 @@ const mutations = {
         if(score >= 63) {
             state.protocolOne[7].value = 50;
         }
+    },
+
+    setPairSum: (state, nr) => {
+        state.protocolTwo[0].value = nr;
+    },
+
+    setTwoPairs: (state, nr) => {
+        state.protocolTwo[1].value = nr;
+    },
+    setThreeOfAKind: (state, nr) => {
+        state.protocolTwo[2].value = nr;
     }
     
 

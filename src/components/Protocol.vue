@@ -12,15 +12,15 @@
             <div class="grid-item 7" >Bonus: {{getBonus}} </div>
         </div>
         <div class="protocol-two">
-            <div class="grid-item 8" @click="onProtocolClick(9)" v-bind:class="{chosen:getProtocolTwo[8].isChosen}">Ett par: {{getPair}} </div>
-            <div class="grid-item 9" @click="onProtocolClick(10)">Två par: {{getTwoPair}} </div>
-            <div class="grid-item 10" @click="onProtocolClick(11)">Tretal: {{getThreeOfAKind}} </div>
-            <div class="grid-item 11" @click="onProtocolClick(12)">Fyrtal: {{getFourOfAKind}} </div>
-            <div class="grid-item 12" @click="onProtocolClick(13)">Liten Stege: {{getSmallStraight}} </div>
-            <div class="grid-item 13" @click="onProtocolClick(14)">Stor Stege:{{getBigStraight}} </div>
-            <div class="grid-item 14" @click="onProtocolClick(15)">Kåk: {{getFullHouse}} </div>
-            <div class="grid-item 15" @click="onProtocolClick(16)">Chans: {{getChance}} </div>
-            <div class="grid-item 16" @click="onProtocolClick(17)">YATZY: {{getYatzy}} </div>
+            <div class="grid-item 8" @click="onProtocolTwoClick(1)" v-bind:class="{chosen:getProtocolTwo[0].isChosen}">Ett par: {{getPair}} </div>
+            <div class="grid-item 9" @click="onProtocolTwoClick(2)" v-bind:class="{chosen:getProtocolTwo[1].isChosen}">Två par: {{getTwoPair}} </div>
+            <div class="grid-item 10" @click="onProtocolTwoClick(3)" v-bind:class="{chosen:getProtocolTwo[2].isChosen}" >Tretal: {{getThreeOfAKind}} </div>
+            <div class="grid-item 11" @click="onProtocolTwoClick(4)">Fyrtal: {{getFourOfAKind}} </div>
+            <div class="grid-item 12" @click="onProtocolTwoClick(5)">Liten Stege: {{getSmallStraight}} </div>
+            <div class="grid-item 13" @click="onProtocolTwoClick(6)">Stor Stege:{{getBigStraight}} </div>
+            <div class="grid-item 14" @click="onProtocolTwoClick(7)">Kåk: {{getFullHouse}} </div>
+            <div class="grid-item 15" @click="onProtocolTwoClick(8)">Chans: {{getChance}} </div>
+            <div class="grid-item 16" @click="onProtocolTwoClick(9)">YATZY: {{getYatzy}} </div>
             <div class="grid-item 17" >Totalt:{{getTotal}} </div>
 
         </div>
@@ -46,15 +46,20 @@ export default {
         },
 
         onProtocolTwoClick(x){
-            this.unLock();
+            this.checkProtocolTwo(x);
             this.resetDiceValue();
+            this.unLock();
             this.chooseValueInProtocolTwo();
             this.lockProtocolTwo(x);
         },
-        
+
         //This function is used to check ones to sixes
         check: function(x) {
             this.$store.dispatch('check', x); 
+        },
+        //This function sends x to a switch statement in storage.
+        checkProtocolTwo: function(x) {
+            this.$store.dispatch('checkProtocolTwo', x);
         },
 
         // Unlocks locked dice.
