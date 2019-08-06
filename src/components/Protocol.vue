@@ -143,7 +143,7 @@ export default {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     color: black; 
-    padding: 10px;
+    padding: 5px;
     grid-area: rec;
     cursor:pointer;
 }
@@ -152,7 +152,7 @@ export default {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
     color: black; 
-    padding: 10px;
+    padding: 5px;
     grid-area: rec;
     cursor:pointer;
 }

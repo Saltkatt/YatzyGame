@@ -40,9 +40,10 @@ export default {
 }
 
 .btn{
-  background-color:sienna;
+  background-color:indigo;
   color:wheat;
   padding: 10px;
+  border-radius: 10px;
   cursor:pointer;
 
 }

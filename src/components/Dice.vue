@@ -101,10 +101,11 @@ export default {
 /* Playing field */
 .field{
     background-color: lightblue;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     padding:10px;
     border-radius: 15px;
+    
 }
 
 .field > div{
@@ -171,6 +172,7 @@ div > div.field > div.chosen{
     justify-content: space-evenly;
     align-items: center;
     padding:10px;
+
 }
 
     
@@ -181,6 +183,8 @@ div > div.field > div.chosen{
     .field{
         display: flex;
         flex-flow: row wrap;
+        width: 80%;
+        margin-left: 5%;
     }
 
     .field > div:hover{
