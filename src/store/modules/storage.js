@@ -345,7 +345,11 @@ const actions = {
         //Adds to round
         context.commit("increaseRounds");
     },
-
+    /*
+    Filters through the dice values and 
+    loops them through a for-loop to check 
+    for three dice with the same value.
+    */ 
     threeOfAKind(context) {
         var sD = context.state.savedDice; 
             function result(nr) {
@@ -360,6 +364,35 @@ const actions = {
                     context.commit('setThreeOfAKind', summa);
                 }
             }
+        //Resets counter
+        context.commit("resetCounter");
+        //Resets chooseButton counter
+        context.commit("resetBtnCounter");
+        //Resets savedDice[]
+        context.commit("resetSavedDice");
+        //Adds to round
+        context.commit("increaseRounds");
+    },
+    /*
+    Filters through the dice values and 
+    loops them through a for-loop to check 
+    for four dice with the same value.
+    */
+    fourOfAKind(context) {
+        var sD = context.state.savedDice; 
+        function result(nr) {
+            return sD.filter(function(dice) {
+                return dice.value == nr;
+            });
+        }
+
+        for (let i = 1; i <= 6; i++) {
+            var x = result(i);
+            if (x.length == 4) {
+                var summa = x[0].value * 4;
+                context.commit('setFourOfAKind', summa)
+            }
+        }
         //Resets counter
         context.commit("resetCounter");
         //Resets chooseButton counter
@@ -469,12 +502,14 @@ const mutations = {
     setPairSum: (state, nr) => {
         state.protocolTwo[0].value = nr;
     },
-
     setTwoPairs: (state, nr) => {
         state.protocolTwo[1].value = nr;
     },
     setThreeOfAKind: (state, nr) => {
         state.protocolTwo[2].value = nr;
+    },
+    setFourOfAKind: (state, nr) => {
+        state.protocolTwo[3].value = nr;
     }
     
 
