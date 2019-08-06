@@ -12,15 +12,15 @@
             <div class="grid-item 7" >Bonus: {{getBonus}} </div>
         </div>
         <div class="protocol-two">
-            <div class="grid-item 8" @click="onProtocolTwoClick(1)" v-bind:class="{chosen:getProtocolTwo[0].isChosen}">Ett par: {{getPair}} </div>
-            <div class="grid-item 9" @click="onProtocolTwoClick(2)" v-bind:class="{chosen:getProtocolTwo[1].isChosen}">Två par: {{getTwoPair}} </div>
-            <div class="grid-item 10" @click="onProtocolTwoClick(3)" v-bind:class="{chosen:getProtocolTwo[2].isChosen}" >Tretal: {{getThreeOfAKind}} </div>
-            <div class="grid-item 11" @click="onProtocolTwoClick(4)">Fyrtal: {{getFourOfAKind}} </div>
-            <div class="grid-item 12" @click="onProtocolTwoClick(5)">Liten Stege: {{getSmallStraight}} </div>
-            <div class="grid-item 13" @click="onProtocolTwoClick(6)">Stor Stege:{{getBigStraight}} </div>
-            <div class="grid-item 14" @click="onProtocolTwoClick(7)">Kåk: {{getFullHouse}} </div>
-            <div class="grid-item 15" @click="onProtocolTwoClick(8)">Chans: {{getChance}} </div>
-            <div class="grid-item 16" @click="onProtocolTwoClick(9)">YATZY: {{getYatzy}} </div>
+            <div class="grid-item 8" @click="onProtocolTwoClick(0)" v-bind:class="{chosen:getProtocolTwo[0].isChosen}">Ett par: {{getPair}} </div>
+            <div class="grid-item 9" @click="onProtocolTwoClick(1)" v-bind:class="{chosen:getProtocolTwo[1].isChosen}">Två par: {{getTwoPair}} </div>
+            <div class="grid-item 10" @click="onProtocolTwoClick(2)" v-bind:class="{chosen:getProtocolTwo[2].isChosen}" >Tretal: {{getThreeOfAKind}} </div>
+            <div class="grid-item 11" @click="onProtocolTwoClick(3)" v-bind:class="{chosen:getProtocolTwo[3].isChosen}">Fyrtal: {{getFourOfAKind}} </div>
+            <div class="grid-item 12" @click="onProtocolTwoClick(4)" v-bind:class="{chosen:getProtocolTwo[4].isChosen}">Liten Stege: {{getSmallStraight}} </div>
+            <div class="grid-item 13" @click="onProtocolTwoClick(5)" v-bind:class="{chosen:getProtocolTwo[5].isChosen}">Stor Stege: {{getBigStraight}} </div>
+            <div class="grid-item 14" @click="onProtocolTwoClick(6)" v-bind:class="{chosen:getProtocolTwo[6].isChosen}">Kåk: {{getFullHouse}} </div>
+            <div class="grid-item 15" @click="onProtocolTwoClick(7)" v-bind:class="{chosen:getProtocolTwo[7].isChosen}">Chans: {{getChance}} </div>
+            <div class="grid-item 16" @click="onProtocolTwoClick(8)" v-bind:class="{chosen:getProtocolTwo[8].isChosen}">YATZY: {{getYatzy}} </div>
             <div class="grid-item 17" >Totalt:{{getTotal}} </div>
 
         </div>
@@ -52,7 +52,6 @@ export default {
             this.chooseValueInProtocolTwo();
             this.lockProtocolTwo(x);
         },
-
         //This function is used to check ones to sixes
         check: function(x) {
             this.$store.dispatch('check', x); 
@@ -61,18 +60,15 @@ export default {
         checkProtocolTwo: function(x) {
             this.$store.dispatch('checkProtocolTwo', x);
         },
-
         // Unlocks locked dice.
         unLock(){
             this.$store.commit('resetIsLocked');
         },
-
         // Resets dice values to zero.
         resetDiceValue(){
             this.$store.commit('resetDiceValue');
         },
-
-          //Changes colour of grid element in protocol-one to lightgreen
+        //Changes colour of grid element in protocol-one to lightgreen
         chooseValueInProtocolOne(){
             this.getProtocolOne.forEach((element, id) => {
                 if(element.isChosen == true){
@@ -95,7 +91,7 @@ export default {
         },
 
         lockProtocolTwo(x){
-            var id = x -1;
+            var id = x;
             this.$store.commit('chooseTwo', id )
         }
 
@@ -104,7 +100,7 @@ export default {
         'allDice', 'getProtocolOne','getProtocolTwo','getRounds', 'getCheckValue', 'getSavedDice', 
         'getOnes','getTwos','getThrees','getFours','getFives','getSixes','getSumPOne','getBonus',
         'getPair','getTwoPair','getThreeOfAKind','getFourOfAKind','getFullHouse','getSmallStraight','getBigStraight',
-        'getYatzy','getChance', 'getTotal'
+        'getYatzy','getChance', 'getTotal', 'getHousePair', 'getHouseThreeOfAKind'
         
         ])}
 

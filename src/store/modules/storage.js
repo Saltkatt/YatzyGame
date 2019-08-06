@@ -103,7 +103,7 @@ const state = {
       // Array for protocol two.
       protocolTwo: [
         {
-            id: 1, 
+            id: 0, 
             name: 'Pair', 
             value: null, 
             selected: false,
@@ -111,7 +111,7 @@ const state = {
             pass: false,
         },
         {
-            id: 2, 
+            id: 1, 
             name: 'Two Pairs', 
             value: null, 
             selected: false,
@@ -119,7 +119,7 @@ const state = {
             pass: false,
         },
         {
-            id: 3, 
+            id: 2, 
             name: 'Three Of A Kind', 
             value: null, 
             selected: false,
@@ -127,7 +127,7 @@ const state = {
             pass: false,
         },
         {
-            id: 4, 
+            id: 3, 
             name: 'Four Of A Kind', 
             value: null, 
             selected: false,
@@ -135,15 +135,7 @@ const state = {
             pass: false,
         },
         {
-            id: 5, 
-            name: 'Full House', 
-            value: null, 
-            selected: false,
-            isChosen: false,
-            pass: false,
-        },
-        {
-            id: 6, 
+            id: 4, 
             name: 'Small Straight', 
             value: null, 
             selected: false,
@@ -151,7 +143,7 @@ const state = {
             pass: false,
         },
         {
-            id: 7, 
+            id: 5, 
             name: 'Big Straight', 
             value: null, 
             selected: false,
@@ -159,15 +151,15 @@ const state = {
             pass: false,
         },
         {
-            id: 8, 
-            lname: 'Yatzy', 
+            id: 6, 
+            name: 'Full House', 
             value: null, 
             selected: false,
             isChosen: false,
             pass: false,
         },
         {
-            id: 9, 
+            id: 7, 
             name: 'Chance', 
             value: null, 
             selected: false,
@@ -175,9 +167,17 @@ const state = {
             pass: false,
         },
         {
-            id: 10, 
+            id: 8, 
+            name: 'Yatzy', 
+            value: null, 
+            selected: false,
+            isChosen: false,
+            pass: false,
+        },
+        {
+            id: 9, 
             name: 'Total', 
-            value: 0, 
+            value: null, 
             selected: false,
             isChosen: false,
             pass: false,
@@ -196,6 +196,9 @@ const state = {
       checkValue: 0,
       
       savedDice: [],
+
+      housePair: null,
+      houseThreeOfAKind: null,
 
 }
 const getters = {
@@ -219,12 +222,14 @@ const getters = {
     getTwoPair: (state) => state.protocolTwo[1].value,
     getThreeOfAKind: (state) => state.protocolTwo[2].value,
     getFourOfAKind: (state) => state.protocolTwo[3].value,
-    getFullHouse: (state) => state.protocolTwo[4].value,
-    getSmallStraight: (state) => state.protocolTwo[5].value,
-    getBigStraight: (state) => state.protocolTwo[6].value,
-    getYatzy: (state) => state.protocolTwo[7].value,
-    getChance: (state) => state.protocolTwo[8].value,
+    getSmallStraight: (state) => state.protocolTwo[4].value,
+    getBigStraight: (state) => state.protocolTwo[5].value,
+    getFullHouse: (state) => state.protocolTwo[6].value,
+    getChance: (state) => state.protocolTwo[7].value,
+    getYatzy: (state) => state.protocolTwo[8].value,
     getTotal: (state) => state.protocolTwo[9].value,
+    getHousePair: (state) => state.housePair,
+    getHouseThreeOfAKind: (state) => state.houseThreeOfAKind,
 
 }
 const actions = {
@@ -248,38 +253,45 @@ const actions = {
         });
             //Sends payload to mutation addToSumInProtocolOne.
             context.commit('addToSumInProtocolOne', payload )
-            //Resets counter
+            //Resets counter, chooseButton counter, savedDice[] and adds to round
             context.commit("resetCounter");
-            //Resets chooseButton counter
             context.commit("resetBtnCounter");
-            //Resets savedDice[]
             context.commit("resetSavedDice");
-            //Adds to round
             context.commit("increaseRounds");
-            // Checks if bonus should be added.
+            //Checks if bonus should be added.
             context.commit("addBonus");
     },
 
     //This function contains a switch-statement used activate the correct function for the chosen protocolTwo item.
     checkProtocolTwo: (context, x) => {
         switch(x) {
-            case 1:
+            case 0:
                 context.dispatch('pair');
                 break;
-            case 2:
+            case 1:
                 context.dispatch('twoPair');
                 break;
-            case 3:
+            case 2:
                 context.dispatch('threeOfAKind');
                 break;
+            case 3:
+                context.dispatch('fourOfAKind');
+                break;
             case 4:
+                context.dispatch('smallStraight');
                 break;
             case 5:
+                context.dispatch('bigStraight');
                 break;
             case 6:
+                context.dispatch('fullHouse');
                 break;
-
-        
+            case 7:
+                context.dispatch('chance')
+                break;
+            case 8:
+                context.dispatch('yatzy');
+                break;
         
         }   
     },
@@ -299,17 +311,18 @@ const actions = {
               context.commit('setPairSum', summa)
           }
       }
-      //Resets counter
+      //Resets counter, chooseButton counter, savedDice[] and adds to round
       context.commit("resetCounter");
-      //Resets chooseButton counter
       context.commit("resetBtnCounter");
-      //Resets savedDice[]
       context.commit("resetSavedDice");
-      //Adds to round
       context.commit("increaseRounds");
     },
 
-    //Filters and loops through values to check for pairs, uses a counter to check the amount of pairs.
+    /*
+    Filters and loops through values 
+    to check for pairs, uses a counter 
+    to check the amount of pairs.
+    */
     twoPair(context){
         var sD = context.state.savedDice;      
         function result(nr) {
@@ -336,14 +349,11 @@ const actions = {
                 }
             }
         }
-        //Resets counter
-        context.commit("resetCounter");
-        //Resets chooseButton counter
-        context.commit("resetBtnCounter");
-        //Resets savedDice[]
-        context.commit("resetSavedDice");
-        //Adds to round
-        context.commit("increaseRounds");
+       //Resets counter, chooseButton counter, savedDice[] and adds to round
+       context.commit("resetCounter");
+       context.commit("resetBtnCounter");
+       context.commit("resetSavedDice");
+       context.commit("increaseRounds");
     },
     /*
     Filters through the dice values and 
@@ -364,14 +374,11 @@ const actions = {
                     context.commit('setThreeOfAKind', summa);
                 }
             }
-        //Resets counter
-        context.commit("resetCounter");
-        //Resets chooseButton counter
-        context.commit("resetBtnCounter");
-        //Resets savedDice[]
-        context.commit("resetSavedDice");
-        //Adds to round
-        context.commit("increaseRounds");
+       //Resets counter, chooseButton counter, savedDice[] and adds to round
+       context.commit("resetCounter");
+       context.commit("resetBtnCounter");
+       context.commit("resetSavedDice");
+       context.commit("increaseRounds");
     },
     /*
     Filters through the dice values and 
@@ -393,13 +400,198 @@ const actions = {
                 context.commit('setFourOfAKind', summa)
             }
         }
-        //Resets counter
+       //Resets counter, chooseButton counter, savedDice[] and adds to round
+       context.commit("resetCounter");
+       context.commit("resetBtnCounter");
+       context.commit("resetSavedDice");
+       context.commit("increaseRounds");
+       
+    },
+    /*
+    Filters through array of dice sorts same 
+    die into one array and distinct die into another.
+    */
+    smallStraight(context){
+        var summa;
+        var sD = context.state.savedDice; 
+        var diceValues = [...new Set(sD.map(x => x.value))];
+
+        //Creates an array (result(i)) that adds values that are the same to the array
+        function result(nr) {
+            return sD.filter(function(dice) {
+                return dice.value == nr;
+            });
+        }
+        function distinct(value, index) {
+            return diceValues.indexOf(value) === index;
+        }
+        //Creates an array (distinctValues) that adds values that different 
+        const distinctValues = diceValues.filter(distinct);
+        //Loops through the length of the distinctValues array
+        for (var j = 0; j < distinctValues.length; j++){
+            //result(i) array checks if there are any sixes.
+            var x = result(6);
+            //If there are 5 distinct values in the distinctValues array and result(i) array has no indicies
+            if(distinctValues.length == 5 && x.length == 0) {
+                //summa is 15
+                summa = 15;
+            }
+            else{
+                //else summa is 0
+                summa = null;
+            }
+        }
+        //Send summa to store mutation setLStraight
+        context.commit('setSmallStraight', summa)
+        //Resets counter, chooseButton counter, savedDice[] and adds to round
         context.commit("resetCounter");
-        //Resets chooseButton counter
         context.commit("resetBtnCounter");
-        //Resets savedDice[]
         context.commit("resetSavedDice");
-        //Adds to round
+        context.commit("increaseRounds");
+
+    },
+     /*
+     Filters through array of dice sorts same 
+     die into one array and distinct die into another.
+     */
+     bigStraight(context) {
+        var summa;
+        var sD = context.state.savedDice; 
+        var diceValues = [...new Set(sD.map(x => x.value))];
+        //Creates an array (result(i)) that adds values that are the same to the array
+        function result(nr) {
+            return sD.filter(function(dice) {
+                return dice.value == nr;
+            });
+        }
+        function distinct(value, index) {
+            return diceValues.indexOf(value) === index;
+        }
+        //Creates an array (distinctValues) that adds values that different using the distinct function.
+        const distinctValues = diceValues.filter(distinct);
+        //Loops through the length of the distinctValues array
+        for (var j = 0; j < distinctValues.length; j++){
+            //result(i) array checks if there are any ones.
+            var x = result(1);
+            //If there are 5 distinct values in the distinctValues array and result(i) array has no indicies
+            if(distinctValues.length == 5 && x.length == 0) {
+                //summa is 20
+                summa = 20;
+            }
+            else{
+                //else summa is 0
+                summa = null;
+            }
+        }
+            //Send summa to mutation setBigStraight
+            context.commit('setBigStraight', summa);
+
+        //Resets counter, chooseButton counter, savedDice[] and adds to round
+        context.commit("resetCounter");
+        context.commit("resetBtnCounter");
+        context.commit("resetSavedDice");
+        context.commit("increaseRounds");
+              
+    },
+
+    housePair: (context) => {
+        var sD = context.state.savedDice;
+        function result(nr) {
+            return sD.filter(function(dice) {
+                return dice.value == nr;
+            });
+        }
+        for (let i = 1; i <= 6; i++) {
+            var x = result(i);
+            if (x.length == 2) {
+                var summa = x[0].value * 2;
+                context.commit('setHousePair', summa);
+            }
+        }
+      },
+
+    houseThreeOfAKind(context) {
+        var sD = context.state.savedDice; 
+            function result(nr) {
+                return sD.filter(function(dice) {
+                    return dice.value == nr;
+                });
+            }
+            for (let i = 1; i <= 6; i++) {
+                var x = result(i);
+                if (x.length == 3) {
+                    var summa = x[0].value * 3;
+                    context.commit('setHouseThreeOfAKind', summa);
+                    
+                }
+            }
+    },
+
+    fullHouse(context) {
+        context.dispatch('housePair');
+        context.dispatch('houseThreeOfAKind');
+        var score;
+        var a = context.state.housePair;
+        var b = context.state.houseThreeOfAKind;
+        score = a + b;
+
+        context.commit('setFullHouse', score);
+        //Resets counter, chooseButton counter, savedDice[] and adds to round
+        context.commit("resetCounter");
+        context.commit("resetBtnCounter");
+        context.commit("resetSavedDice");
+        context.commit("increaseRounds");
+    },
+
+    // Adds all the dice values together.
+    chance(context){
+        var sD = context.state.savedDice; 
+        var summa = null;
+        
+        function result(nr) {
+            return sD.filter(function(dice) {
+                return dice.value == nr;
+            });
+        }
+        for (let i = 1; i <= 6; i++) {
+            var x = result(i);
+            for (var j = 0; j < x.length; j++){
+                summa += x[j].value
+            }
+            context.commit('setChance', summa)
+        }
+        //Resets counter, chooseButton counter, savedDice[] and adds to round
+        context.commit("resetCounter");
+        context.commit("resetBtnCounter");
+        context.commit("resetSavedDice");
+        context.commit("increaseRounds");
+    },
+
+
+    /*
+    Filters through the dice values and 
+    loops them through a for-loop to check 
+    if they all have the same value.
+    */
+    yatzy(context){
+        var sD = context.state.savedDice; 
+        function result(nr) {
+            return sD.filter(function(dice) {
+                return dice.value == nr;
+            });
+        }
+
+        for (let i = 1; i <= 6; i++) {
+            var x = result(i);
+            if (x.length == 5) {
+                var summa = 50;
+                context.commit('setYatzy', summa);
+            }
+        }
+        //Resets counter, chooseButton counter, savedDice[] and adds to round
+        context.commit("resetCounter");
+        context.commit("resetBtnCounter");
+        context.commit("resetSavedDice");
         context.commit("increaseRounds");
 
     },
@@ -424,17 +616,17 @@ const mutations = {
     },
     // Toggles protocolOne variable isChosen (true/false)
     chooseOne: (state, id) => {
-        state.protocolOne[id].isChosen = !state.protocolOne[id].isChosen;
+        state.protocolOne[id].isChosen = true;
     },
     // Toggles protocolTwo variable isChosen (true/false)
     chooseTwo: (state, id) => {
-        state.protocolTwo[id].isChosen = !state.protocolTwo[id].isChosen;
+        state.protocolTwo[id].isChosen = true;
     },
     selectOne: (state, id) => {
-        state.protocolOne[id].selected = !state.protocolOne[id].selected;
+        state.protocolOne[id].selected = true;
     },
     selectTwo: (state, id) => {
-        state.protocolTwo[id].selected = !state.protocolTwo[id].selected;
+        state.protocolTwo[id].selected = true;
     },
 
     passOne: (state, id) => {
@@ -510,9 +702,30 @@ const mutations = {
     },
     setFourOfAKind: (state, nr) => {
         state.protocolTwo[3].value = nr;
+    },
+    setSmallStraight: (state, nr) => {
+        console.log('setSmallStraight' + nr);
+        state.protocolTwo[4].value = nr;
+    },
+    setBigStraight: (state, nr) => {
+        console.log('setBigStraight' +  nr);
+        state.protocolTwo[5].value = nr;
+    },
+    setFullHouse: (state, nr) => {
+        state.protocolTwo[6].value = nr;
+    },
+    setChance: (state, nr) => {
+        state.protocolTwo[7].value = nr;
+    },
+    setYatzy: (state, nr) => {
+        state.protocolTwo[8].value = nr;
+    },
+    setHousePair: (state, nr) => {
+        state.housePair = nr;
+    },
+    setHouseThreeOfAKind: (state, nr) => {
+        state.houseThreeOfAKind = nr;
     }
-    
-
 
 
 
