@@ -12,24 +12,21 @@
             <div class="grid-item 7" >Bonus: {{getBonus}} </div>
         </div>
         <div class="protocol-two">
-            <div class="grid-item 8" @click="onProtocolClick(9)" v-bind:class="{chosen:getProtocolTwo[8].isChosen}">Ett par:  </div>
-            <div class="grid-item 9" @click="onProtocolClick(10)">Två par: </div>
-            <div class="grid-item 10" @click="onProtocolClick(11)">Tretal:  </div>
-            <div class="grid-item 11" @click="onProtocolClick(12)">Fyrtal:  </div>
-            <div class="grid-item 12" @click="onProtocolClick(13)">Liten Stege: </div>
-            <div class="grid-item 13" @click="onProtocolClick(14)">Stor Stege: </div>
-            <div class="grid-item 14" @click="onProtocolClick(15)">Kåk: </div>
-            <div class="grid-item 15" @click="onProtocolClick(16)">Chans: </div>
-            <div class="grid-item 16" @click="onProtocolClick(17)">YATZY:  </div>
-            <div class="grid-item 17" >Totalt: </div>
+            <div class="grid-item 8" @click="onProtocolClick(9)" v-bind:class="{chosen:getProtocolTwo[8].isChosen}">Ett par: {{getPair}} </div>
+            <div class="grid-item 9" @click="onProtocolClick(10)">Två par: {{getTwoPair}} </div>
+            <div class="grid-item 10" @click="onProtocolClick(11)">Tretal: {{getThreeOfAKind}} </div>
+            <div class="grid-item 11" @click="onProtocolClick(12)">Fyrtal: {{getFourOfAKind}} </div>
+            <div class="grid-item 12" @click="onProtocolClick(13)">Liten Stege: {{getSmallStraight}} </div>
+            <div class="grid-item 13" @click="onProtocolClick(14)">Stor Stege:{{getBigStraight}} </div>
+            <div class="grid-item 14" @click="onProtocolClick(15)">Kåk: {{getFullHouse}} </div>
+            <div class="grid-item 15" @click="onProtocolClick(16)">Chans: {{getChance}} </div>
+            <div class="grid-item 16" @click="onProtocolClick(17)">YATZY: {{getYatzy}} </div>
+            <div class="grid-item 17" >Totalt:{{getTotal}} </div>
 
         </div>
         
-        
-       
     </div>
-        
-
+    
 </div>
     
 </template>
@@ -99,20 +96,10 @@ export default {
 
     },
     computed: {...mapGetters([
-        'allDice', 
-        'getProtocolOne',
-        'getProtocolTwo',
-        'getRounds', 
-        'getCheckValue', 
-        'getSavedDice', 
-        'getOnes',
-        'getTwos',
-        'getThrees',
-        'getFours',
-        'getFives',
-        'getSixes',
-        'getSumPOne',
-        'getBonus',
+        'allDice', 'getProtocolOne','getProtocolTwo','getRounds', 'getCheckValue', 'getSavedDice', 
+        'getOnes','getTwos','getThrees','getFours','getFives','getSixes','getSumPOne','getBonus',
+        'getPair','getTwoPair','getThreeOfAKind','getFourOfAKind','getFullHouse','getSmallStraight','getBigStraight',
+        'getYatzy','getChance', 'getTotal'
         
         ])}
 

@@ -215,6 +215,16 @@ const getters = {
     getSixes: (state) => state.protocolOne[5].value,
     getSumPOne: (state) => state.protocolOne[6].value,
     getBonus: (state) => state.protocolOne[7].value,
+    getPair: (state) => state.protocolTwo[0].value,
+    getTwoPair: (state) => state.protocolTwo[1].value,
+    getThreeOfAKind: (state) => state.protocolTwo[2].value,
+    getFourOfAKind: (state) => state.protocolTwo[3].value,
+    getFullHouse: (state) => state.protocolTwo[4].value,
+    getSmallStraight: (state) => state.protocolTwo[5].value,
+    getBigStraight: (state) => state.protocolTwo[6].value,
+    getYatzy: (state) => state.protocolTwo[7].value,
+    getChance: (state) => state.protocolTwo[8].value,
+    getTotal: (state) => state.protocolTwo[9].value,
 
 }
 const actions = {
@@ -254,7 +264,6 @@ const actions = {
              
     },
 
-    
   
 };
 const mutations = {
