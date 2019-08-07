@@ -20,7 +20,7 @@
     v-bind:disabled="btnCounter === 1"
     > Välj </button>
 
-    <button class="btn passButton" >Stryka</button>
+    <button class="btn passButton" @click="onPassBtnClick" >Stryk</button>
 
 </div>
     
@@ -43,6 +43,12 @@ export default {
             this.saveDice()  
         },
 
+        onPassBtnClick(){
+
+        },
+
+    
+
          
         /*
         Iterates through dice array and checks if dice are locked true/false.
@@ -60,7 +66,6 @@ export default {
         locked(id){
             this.$store.commit('changeLock', id ) 
         },
-
        
         /* 
         Iterates through the dice array to check for locked dice.

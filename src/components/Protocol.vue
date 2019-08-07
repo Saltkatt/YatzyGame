@@ -41,17 +41,22 @@ export default {
             this.check(x);
             this.unLock();
             this.resetDiceValue();
-            this.chooseValueInProtocolOne();
             this.lockProtocolOne(x)
+            this.chooseValueInProtocolOne();
+
+            
         },
 
         onProtocolTwoClick(x){
             this.checkProtocolTwo(x);
             this.resetDiceValue();
             this.unLock();
-            this.chooseValueInProtocolTwo();
             this.lockProtocolTwo(x);
+            this.chooseValueInProtocolTwo();
+            
         },
+
+        
         //This function is used to check ones to sixes
         check: function(x) {
             this.$store.dispatch('check', x); 
@@ -72,7 +77,7 @@ export default {
         chooseValueInProtocolOne(){
             this.getProtocolOne.forEach((element, id) => {
                 if(element.isChosen == true){
-                    this.$store.commit('selectOne', id)
+                    this.$store.commit('selectOne', id);
                 }
             });
         },
@@ -80,20 +85,31 @@ export default {
         chooseValueInProtocolTwo(){
              this.getProtocolTwo.forEach((element, id) => {
                 if(element.isChosen == true){
-                    this.$store.commit('selectTwo', id)
+                    this.$store.commit('selectTwo', id);
                 }
             });
         },
 
         lockProtocolOne(x){
             var id = x - 1;
-            this.$store.commit('chooseOne', id ) 
+            this.$store.commit('chooseOne', id ); 
+            this.$store.dispatch('passProtocolOne', id );
         },
 
         lockProtocolTwo(x){
             var id = x;
-            this.$store.commit('chooseTwo', id )
+            this.$store.commit('chooseTwo', id );
+            this.$store.dispatch('passProtocolTwo', id );
+        },
+
+        changeColourProtocolOne: (id) => {
+        var p1 = this.getProtocolOne;
+
+        if(p1[id].pass == true) {
+           
         }
+
+    },
 
     },
     computed: {...mapGetters([
@@ -181,6 +197,11 @@ export default {
      pointer-events: none;
 }
 
+.protocol-two > div.chosen{
+     background-color:lightgreen;
+     pointer-events: none;
+}
+
 /* Mobile */
 
 @media screen and (max-width: 500px) {
@@ -191,7 +212,22 @@ export default {
     .protocol-one > div.chosen{
      background-color:lightgreen;
      pointer-events: none;
-}
+    }
+
+    .protocol-two > div.chosen{
+     background-color:lightgreen;
+     pointer-events: none;
+    }
+
+    .protocol-one > div.pass{
+     background-color:lightpink;
+     pointer-events: none;
+    }
+
+    .protocol-two > div.pass{
+     background-color:lightpink;
+     pointer-events: none;
+    }
     
 }
 

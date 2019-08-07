@@ -262,6 +262,22 @@ const actions = {
             context.commit("addBonus");
     },
 
+    passProtocolOne: (context, id) => {
+        var p1 = context.state.protocolOne;
+        console.log("start of passOne: " + id)
+        if(p1[id].value == 0 ){
+            context.commit('passOne', id)
+            console.log("commit to passOne")
+        }
+    },
+
+    passProtocolTwo: (context, id) => {
+        var p2 = context.state.protocolOne;
+        if(p2[id].value == 0 ){
+            context.commit('passTwo', id)
+        }
+    },
+
     //This function contains a switch-statement used activate the correct function for the chosen protocolTwo item.
     checkProtocolTwo: (context, x) => {
         switch(x) {
@@ -324,7 +340,9 @@ const actions = {
     to check the amount of pairs.
     */
     twoPair(context){
-        var sD = context.state.savedDice;      
+        var sD = context.state.savedDice;   
+        //Receives a nr from variable x, filters through savedDice array 
+        //for dice with the same value as x and returns a temporary array with dice.values the same as x.    
         function result(nr) {
             return sD.filter(function(dice) {
                 return dice.value == nr;
@@ -566,8 +584,6 @@ const actions = {
         context.commit("resetSavedDice");
         context.commit("increaseRounds");
     },
-
-
     /*
     Filters through the dice values and 
     loops them through a for-loop to check 
@@ -630,11 +646,11 @@ const mutations = {
     },
 
     passOne: (state, id) => {
-        state.protocolOne[id].pass = !state.protocolOne[id].pass;
+        state.protocolOne[id].pass = true;
     },
 
     passTwo: (state, id) => {
-        state.protocolTwo[id].pass = !state.protocolTwo[id].pass;
+        state.protocolTwo[id].pass = true;
     },
 
     // Increase choose button counter
@@ -704,11 +720,9 @@ const mutations = {
         state.protocolTwo[3].value = nr;
     },
     setSmallStraight: (state, nr) => {
-        console.log('setSmallStraight' + nr);
         state.protocolTwo[4].value = nr;
     },
     setBigStraight: (state, nr) => {
-        console.log('setBigStraight' +  nr);
         state.protocolTwo[5].value = nr;
     },
     setFullHouse: (state, nr) => {
