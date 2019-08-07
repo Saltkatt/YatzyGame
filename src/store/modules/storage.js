@@ -233,6 +233,27 @@ const getters = {
 
 }
 const actions = {
+    replay: (context) => {
+        var p1 = context.state.protocolOne;
+        var p2 = context.state.protocolTwo;
+        for(var i = 0; i < p1.length; i++){
+            p1[i].value = null;
+            p1[i].selected = false;
+            p1[i].isChosen = false;
+            p1[i].pass = false;
+        }
+        for(var j = 0; j < p2.length; j++){
+            p2[j].value = null;
+            p2[j].selected = false;
+            p2[j].isChosen = false;
+            p2[j].pass = false;
+        }
+        context.commit("resetCounter");
+        context.commit("resetBtnCounter");
+        context.commit("resetSavedDice");
+        context.commit("resetRounds");
+
+    },
     //Checks dice for the value sent in as x.
     check: (context, x) => {
         var sD = context.state.savedDice;
@@ -262,15 +283,18 @@ const actions = {
             context.commit("addBonus");
     },
 
+    /* Receives an id and checks if the value of the protocol id is equal to 0.
+       If the value is 0 it sends the id to passOne which changes the pass variable to true.
+    */ 
     passProtocolOne: (context, id) => {
         var p1 = context.state.protocolOne;
-        console.log("start of passOne: " + id)
         if(p1[id].value == 0 ){
             context.commit('passOne', id)
-            console.log("commit to passOne")
         }
     },
-
+    /* Receives an id and checks if the value of the protocol id is equal to 0.
+       If the value is 0 it sends the id to passOne which changes the pass variable to true.
+    */ 
     passProtocolTwo: (context, id) => {
         var p2 = context.state.protocolOne;
         if(p2[id].value == 0 ){
@@ -615,6 +639,7 @@ const actions = {
     
 };
 const mutations = {
+   
     // This function rolls tha dice and allows it to roll three times.
     rollDice: (state, nr) => {
         var rand = Math.ceil(Math.random()*6)
@@ -638,17 +663,19 @@ const mutations = {
     chooseTwo: (state, id) => {
         state.protocolTwo[id].isChosen = true;
     },
+    // Receives an id and changes the selected variable to true.
     selectOne: (state, id) => {
         state.protocolOne[id].selected = true;
     },
+    // Receives an id and changes the selected variable to true.
     selectTwo: (state, id) => {
         state.protocolTwo[id].selected = true;
     },
-
+    // Receives an id and changes the pass variable to true.
     passOne: (state, id) => {
         state.protocolOne[id].pass = true;
     },
-
+    // Receives an id and changes the pass variable to true.
     passTwo: (state, id) => {
         state.protocolTwo[id].pass = true;
     },
@@ -673,13 +700,16 @@ const mutations = {
     increaseRounds: (state) => {
         state.rounds++;
     },
+    resetRounds: (state) => {
+        state.rounds = 0;
+    },
     // Adds locked dice to array.
     addToSavedDice: (state, payload) => {
         state.savedDice.push(payload);
         state.savedDice.sort();
     },
     // Resets savedDice[] to 0
-    resetSavedDice: function (state) {
+    resetSavedDice: (state) => {
         state.savedDice.length = 0;
 
     },

@@ -30,6 +30,16 @@ export default {
         Protocol,
         Dice
     },
+    methods: {
+        resetGame(){
+            this.replay();
+        },
+
+        replay: function() {
+            this.$store.dispatch('replay');
+        }
+
+    },
     computed: {...mapGetters(['getRounds'])}
 
 };
