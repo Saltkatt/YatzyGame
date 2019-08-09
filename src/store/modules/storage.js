@@ -188,23 +188,22 @@ const state = {
       //Dice roll counter (0-3).
       counter: 0,
       //Rounds (0-15)
-      rounds: 0,
-      
-      //Sum of protocol area two.
-      secondSum: 0,
-
-      checkValue: 0,
-      
+      rounds: 14,
+      // Array to save locked dice into.
       savedDice: [],
+
+      showRules: false,
+
 
       housePair: null,
       houseThreeOfAKind: null,
 
 }
 const getters = {
-    getProtocolOne: (state) => state.protocolOne,
-    getProtocolTwo: (state) => state.protocolTwo,
+    getPOne: (state) => state.protocolOne,
+    getPTwo: (state) => state.protocolTwo,
     allDice: (state) => state.dice,
+    getShowRules: (state) => state.showRules,
     btnCounter:(state) => state.btnCounter,
     counter: (state) => state.counter,
     getRounds: (state) => state.rounds,
@@ -403,7 +402,6 @@ const actions = {
                 //Pair counter
                 var pairsFound = 0;
                 var sum = 0;
-                var score = 0;
                 //Loops through values 1 through 6
                 for (let i = 1; i <= 6; i++) {
                     // x = value in filtered array
@@ -413,16 +411,17 @@ const actions = {
                         // count pair
                         pairsFound ++;
                         // score equals and adds the pair value
-                        score += x[0].value * 2;
+                        sum += x[0].value * 2;
                         // if there are two pairs score is sent to sum.
                         if (pairsFound == 2) {
-                            score = sum;  
+                            console.log("sum: " + sum)
+                            payload = {index: y, summa: sum};
                         }
                     }
                 }
                 // If sum is greater than 0 send payload to mutation.
-                if( sum > 0) {
-                    payload = {index: y, summa: sum};
+                if( pairsFound > 1) {
+                    console.log("sum after if: " + sum)
                     context.commit('setTwoPairs', payload) 
                 }
                 // If sum is no greater than 0 send sum = 0 in payload to mutation.
@@ -749,7 +748,6 @@ const actions = {
                     return dice.value == nr;
                 });
             }
-
             for (let i = 1; i <= 6; i++) {
                 var x = result(i);
                 if (x.length == 5) {
@@ -791,6 +789,9 @@ const mutations = {
             state.dice[i].isLocked = false;
         }
     },
+    showRules:(state) => {
+        state.showRules = !state.showRules;
+      },
     // Toggles protocolOne variable isChosen (true/false)
     chooseOne: (state, id) => {
         state.protocolOne[id].isChosen = true;
@@ -872,7 +873,7 @@ const mutations = {
         var score = state.protocolOne[6].value;
         if(score >= 63) {
             state.protocolOne[7].value = 50;
-            state.protocolTwo[8].value += 50;
+            state.protocolTwo[9].value += 50;
         }
     },
     setPairSum: (state, payload) => {

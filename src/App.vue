@@ -27,28 +27,19 @@ export default {
     -moz-osx-font-smoothing: grayscale;
     margin: 0px;
     background-image: url("./assets/wood-table.jpg");
-    /* background-size: cover; */
 
   }
-
   #app {
     text-align: center;
     color: #2c3e50;
-  
+  }
+
+  .btn{
+    background-color: indigo;
+    border-radius: 5px;
+    cursor:pointer;
   }
   
-}
-
-.btn{
-  background-color:indigo;
-  color:wheat;
-  padding: 10px;
-  border-radius: 10px;
-  cursor:pointer;
-
-}
-.btn:hover{
-  filter:brightness(100%)
 }
 
 
@@ -63,7 +54,6 @@ export default {
     /* background-size: cover; */
 
   }
-
   #app {
     text-align: center;
     color: #2c3e50;

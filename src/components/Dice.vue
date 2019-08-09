@@ -20,7 +20,7 @@
     v-bind:disabled="btnCounter === 1"
     > Välj </button>
 
-    <button class="btn passButton" @click="onPassBtnClick" >Stryk</button>
+   
 
 </div>
     
@@ -43,13 +43,6 @@ export default {
             this.saveDice()  
         },
 
-        onPassBtnClick(){
-
-        },
-
-    
-
-         
         /*
         Iterates through dice array and checks if dice are locked true/false.
         If the dice are not locked they can be rolled and are sent to rollDice in storage.
@@ -57,7 +50,7 @@ export default {
         randomDice(){
             this.allDice.forEach((element, index) => {
                if(element.isLocked == false) {
-                 this.$store.commit('rollDice', index);  
+                 this.$store.commit('rollDice', index);
                }
             });
         },
@@ -82,6 +75,11 @@ export default {
                     continue
                 }
             }
+        },
+
+        rollDiceAnimation() {
+            var animation = document.getElementsByClassName("dice-pos");
+
         },
 
        
@@ -110,7 +108,6 @@ export default {
     align-items: center;
     padding:10px;
     border-radius: 15px;
-    
 }
 
 .field > div{
@@ -162,9 +159,33 @@ div > div.field > div.chosen{
     border: solid 2px black;
 }
 
+/* Dice Animation*/
+.rollingDice{
+    -webkit-animation: rollDiceAnimation;
+    -moz-animation: rollDiceAnimation;
+    -o-animation: rollDiceAnimation;
+    animation: rollDiceAnimation;
+}   
+    @keyframes rollDiceAnimation {
+        50% {-webkit-transform: rotate(360deg);}
+    }
+
+    @-o-keyframes rollDiceAnimation {
+        50% {-webkit-transform: rotate(360deg);}
+    }
+
+    @-moz-keyframes rollDiceAnimation {
+        50% {-webkit-transform: rotate(360deg);}
+    }
+
+    @-webkit-keyframes rollDiceAnimation {
+        50% {-webkit-transform: rotate(360deg);}
+    }
+
 /* Button*/
 
 .btn {
+    margin-top: 5px;
     background-color: indigo;
     border-radius: 5px;
 }
@@ -178,9 +199,8 @@ div > div.field > div.chosen{
     align-items: center;
     padding:10px;
 
-}
-
-    
+    }
+  
 }
 
 /* Small Screen */ 
