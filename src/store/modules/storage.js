@@ -403,7 +403,7 @@ const actions = {
                 //Pair counter
                 var pairsFound = 0;
                 var sum = 0;
-                var score;
+                var score = 0;
                 //Loops through values 1 through 6
                 for (let i = 1; i <= 6; i++) {
                     // x = value in filtered array
@@ -412,18 +412,20 @@ const actions = {
                     if (x.length == 2) {
                         // count pair
                         pairsFound ++;
-                        // sum equals and adds the pair value
+                        // score equals and adds the pair value
                         score += x[0].value * 2;
-                        // if there are two pairs send to store
+                        // if there are two pairs score is sent to sum.
                         if (pairsFound == 2) {
                             score = sum;  
                         }
                     }
                 }
+                // If sum is greater than 0 send payload to mutation.
                 if( sum > 0) {
                     payload = {index: y, summa: sum};
                     context.commit('setTwoPairs', payload) 
                 }
+                // If sum is no greater than 0 send sum = 0 in payload to mutation.
                 else{
                     sum = 0;
                     payload = {index: y, summa: sum};
@@ -444,6 +446,9 @@ const actions = {
             var payload = null;
             var y = 2;  
             var sum = 0;
+            // This function filters through savedDice array 
+            // checking for the value sent in by the x variable further down.
+            // dice that with the same value as x are then sent into a temporary dice array.
             function result(nr) {
                 return sD.filter(function(dice) {
                     return dice.value == nr;
@@ -451,15 +456,19 @@ const actions = {
             }
             for (let i = 1; i <= 6; i++) {
                 var x = result(i);
+                // if the temporary dice[] contains 3 of the same value.
+                // sum equals that value multiplied by 3.
                 if (x.length == 3) {
                     sum = x[0].value * 3;
                     
                 }
             }
+            // If sum is no greater than 0 send sum = 0 in payload to mutation.
             if(sum > 0) {
                 payload = {index: y, summa: sum};
                 context.commit('setThreeOfAKind', payload);
             }
+            // If sum is no greater than 0 send sum = 0 in payload to mutation.
             else {
                 sum = 0;
                 payload = {index: y, summa: sum};
@@ -480,23 +489,30 @@ const actions = {
                 var payload = null;
                 var y = 3;   
                 var sum = 0;
+                // This function filters through savedDice array 
+                // checking for the value sent in by the x variable further down.
+                // dice that with the same value as x are then sent into a temporary dice array.
                 function result(nr) {
                     return sD.filter(function(dice) {
                         return dice.value == nr;
                     });
                 }
-
+                // Loops through the temporary dice[] and checks for dice of the same value.
                 for (let i = 1; i <= 6; i++) {
                     var x = result(i);
+                    // if the temporary dice[] contains 4 of the same value.
+                    // sum equals that value multiplied by 4.
                     if (x.length == 4) {
                         sum = x[0].value * 4;
                         
                     }
                 }
+                // If sum is greater than 0 send payload to mutation.
                 if (sum > 0) {
                     payload = {index: y, summa: sum};
                     context.commit('setFourOfAKind', payload)
                 }
+                // If sum is no greater than 0 send sum = 0 in payload to mutation.
                 else {
                     sum = 0;
                     payload = {index: y, summa: sum};
@@ -687,13 +703,13 @@ const actions = {
 
         // Adds all the dice values together.
         chance(context){
-            var sD = context.state.savedDice; 
+            var allD = context.state.dice; 
             var sum = null;
             var payload = null;
             var y = 7;   
             
             function result(nr) {
-                return sD.filter(function(dice) {
+                return allD.filter(function(dice) {
                     return dice.value == nr;
                 });
             }

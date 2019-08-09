@@ -21,7 +21,7 @@
             <div class="grid-item 14" @click="onProtocolTwoClick(6)" v-bind:class="{chosen:getProtocolTwo[6].isChosen}">Kåk: {{getFullHouse}} </div>
             <div class="grid-item 15" @click="onProtocolTwoClick(7)" v-bind:class="{chosen:getProtocolTwo[7].isChosen}">Chans: {{getChance}} </div>
             <div class="grid-item 16" @click="onProtocolTwoClick(8)" v-bind:class="{chosen:getProtocolTwo[8].isChosen}">YATZY: {{getYatzy}} </div>
-            <div class="grid-item 17" >Totalt:{{getTotal}} </div>
+            <div class="grid-item 17" >Totalt: {{getTotal}} </div>
 
         </div>
         
