@@ -237,6 +237,7 @@ const actions = {
         replay: (context) => {
             var p1 = context.state.protocolOne;
             var p2 = context.state.protocolTwo;
+            var allDice = context.state.dice;
             for(var i = 0; i < p1.length; i++){
                 p1[i].value = null;
                 p1[i].selected = false;
@@ -248,6 +249,11 @@ const actions = {
                 p2[j].selected = false;
                 p2[j].isChosen = false;
                 p2[j].pass = false;
+            }
+            for(var k = 0; k < allDice.length; k++){
+                allDice[k].value = 0;
+                allDice[k].isLocked = false;
+                allDice[k].selected = false;
             }
             context.commit("resetCounter");
             context.commit("resetBtnCounter");
@@ -397,6 +403,7 @@ const actions = {
                 //Pair counter
                 var pairsFound = 0;
                 var sum = 0;
+                var score;
                 //Loops through values 1 through 6
                 for (let i = 1; i <= 6; i++) {
                     // x = value in filtered array
@@ -406,19 +413,21 @@ const actions = {
                         // count pair
                         pairsFound ++;
                         // sum equals and adds the pair value
-                        sum += x[0].value * 2;
+                        score += x[0].value * 2;
                         // if there are two pairs send to store
                         if (pairsFound == 2) {
-                            payload = {index: y, summa: sum};
-                            context.commit('setTwoPairs', payload);
+                            score = sum;  
                         }
-                        /* Else wont work as setting sum 0 removes the value of one of the counted pairs*/ 
-                    /*  else {
-                            sum = 0;
-                            payload = {index: y, summa: sum};
-                            context.commit('setTwoPairs', payload)
-                        }   */
                     }
+                }
+                if( sum > 0) {
+                    payload = {index: y, summa: sum};
+                    context.commit('setTwoPairs', payload) 
+                }
+                else{
+                    sum = 0;
+                    payload = {index: y, summa: sum};
+                    context.commit('setTwoPairs', payload)
                 }
                 //Sends payload to Total in protocolTwo.
                 context.commit('addToTotalInProtocolTwo', payload);
