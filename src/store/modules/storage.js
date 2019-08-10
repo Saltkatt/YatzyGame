@@ -1,5 +1,6 @@
 
 const state = {
+    // Dice array
     dice: [
         {
             id: 0,
@@ -191,10 +192,11 @@ const state = {
       rounds: 0,
       // Array to save locked dice into.
       savedDice: [],
-
+      // Boolean to show rules or not (true/false)
       showRules: false,
-
+      // Used to get sum from housePair function in actions.
       housePair: null,
+      // Used to get sum from houswThreeOfAKind function in actions.
       houseThreeOfAKind: null,
 
 }
@@ -349,7 +351,11 @@ const actions = {
             
             }   
         },
-
+        /*
+        This function filters through the savedDice array and checks if the dice are the same value.
+        The value is then multiplied by 2 and added to sum which is then included in payload and sent to 
+        the correct mutation.
+        */
         pair: (context) => {
             var sD = context.state.savedDice;
             var payload = null;
@@ -623,7 +629,8 @@ const actions = {
                 context.dispatch('reset');
                 
         },
-
+        // This function is the same pair() but sends the sum to housePair in state. 
+        // That sum is then called on by fullHouse().
         housePair: (context) => {
             var sD = context.state.savedDice;
             var summa;
@@ -646,7 +653,8 @@ const actions = {
                 }
             }
         },
-
+        // This function is the same threeOfAKind() but sends the sum to houseThreeOfAKind in state. 
+        // That sum is then called on by fullHouse().
         houseThreeOfAKind(context) {
             var sD = context.state.savedDice;
             var summa; 
@@ -867,6 +875,7 @@ const mutations = {
         state.protocolOne[6].value += payload.summa;
         
     },
+    /* Receives payload from functions in actions and adds new payload.summa to the current value of protocolTwo Total.*/
     addToTotalInProtocolTwo: (state, payload) => {
         state.protocolTwo[9].value += payload.summa;
     },
