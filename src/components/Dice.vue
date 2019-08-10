@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="dice-field">
     <div class="field">
         <div v-for="die in allDice" 
         :key="die.id" 
@@ -7,10 +7,10 @@
         class="dice-pos"
         v-bind:class="{locked: die.isLocked}">
         {{ die.value }}
+        </div>
     </div>
-    </div>
-
-     <button class="btn rollDiceButton" 
+    <div class="button-field">
+    <button class="btn rollDiceButton" 
      @click="onBtnClick" 
      v-bind:disabled="counter === 3"
       >Slå Tärning</button>
@@ -19,8 +19,11 @@
     @click="onChooseBtnClick"
     v-bind:disabled="btnCounter === 1"
     v-bind:class="{changeBtnColor:btnCounter === 1}"
-    
     > Välj </button>
+
+    </div>
+
+     
 
    
 
@@ -99,7 +102,6 @@ export default {
 /* Playing field */
 .field{
     background-color: lightblue;
-    justify-content: center;
     align-items: center;
     padding:10px;
     border-radius: 15px;
@@ -110,7 +112,7 @@ export default {
     font-size: 30px;
     font-weight: bolder;
     color: black;
-    margin: 10px;
+    margin: none;
     width: 50px;
     line-height: 40px;
     padding: 5px 0;
@@ -146,7 +148,6 @@ export default {
 
 div > div.field > div.locked {
     background-color: red;
-    /* border: solid 2px black; */
     
 }
 
@@ -156,35 +157,79 @@ div > div.field > div.chosen{
 }
 
 /* Button*/
+
 .btn {
-    margin-top: 5px;
     background-color:yellowgreen;
     border-radius: 5px;
     cursor:pointer;
     height: 50px;
     width: 100px;
     font-weight: bold;
+    margin-top: 50%;
 }
-.chooseDice{
-    margin-left: 15px;
-   
-}
+
 .changeBtnColor{
     background-color: red;
 }
 
 /* Desktop */
 @media screen and (min-width: 501px) {
-  .field{
-    display: flex;
-    flex-flow: column wrap;
-    justify-content: space-evenly;
-    align-items: center;
-    padding:10px;
-    position: fixed;
-
+    .dice-field{
+    display: grid;
+    grid-template-columns: 100px 100px 100px 100px;
+    grid-template-rows: auto auto;
+    grid-gap: 10px;
     }
-  
+
+  .field{
+    grid-column: 2 / 3;
+    grid-row: 1;
+    display: grid;
+    grid-template-columns: 50px 50px 50px 50px 50px ;
+    grid-template-rows: auto auto;
+    grid-row-gap: 10px;
+    justify-content: start;
+    position: fixed;
+    margin-left: 5%;
+    margin-top: 5%;
+    }
+
+.field div:nth-child(1) {
+   grid-column: 1;
+}
+.field div:nth-child(2) {
+    grid-column: 3;
+}
+.field div:nth-child(3) {
+   grid-column: 5;
+}
+.field div:nth-child(4) {
+    grid-column: 2;
+}
+.field div:nth-child(5) {
+    grid-column: 4;
+} 
+    .button-field{
+        grid-row: 2;
+        display: grid;
+        grid-template-columns: 30px 100px 30px 100px 30px;
+        grid-template-rows: auto auto;
+        grid-gap: 20px;
+        justify-content: start;
+    }
+
+    .btn{ 
+        margin-top: 50%;
+    }
+
+    .rollDiceButton{
+        grid-column: 2;
+        grid-row: 2;
+    }
+    .chooseDice{
+        grid-column: 4;
+        grid-row: 2;
+    }
 }
 
 /* Small Screen */ 
@@ -192,12 +237,41 @@ div > div.field > div.chosen{
     .field{
         display: flex;
         flex-flow: row wrap;
+        justify-content: space-evenly;
+        align-content: center;
         width: 80%;
         margin-left: 5%;
     }
 
+    .field > div{
+        margin: 10px;;
+
+    }
+
     .field > div:hover{
     box-shadow: 0 12px 16px 0 rgba(0,0,0,0.24), 0 17px 50px 0 rgba(0,0,0,0.19);
+    }
+
+     .button-field{
+        grid-row: 2;
+        display: grid;
+        grid-template-columns: 5% 100px 5% 100px 5%;
+        grid-template-rows: auto auto;
+        grid-gap: 20px;
+        justify-content: start;
+    }
+
+    .btn{ 
+        margin-top: 5%;
+    }
+
+    .rollDiceButton{
+        grid-column: 2;
+        grid-row: 1;
+    }
+    .chooseDice{
+        grid-column: 4;
+        grid-row: 1;
     }
     
 }

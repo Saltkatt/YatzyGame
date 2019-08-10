@@ -126,6 +126,7 @@ export default {
     .protocol-area{
         width: 80%;
         position: fixed;
+        
     }
     
 }

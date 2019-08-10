@@ -110,7 +110,11 @@ li{
 
 .main-layout{
   display: grid;
-  grid-template-columns: auto auto;
+  grid-template-columns: 50% 50%;
+  grid-gap:10px;
+  margin-left: 5%;
+  margin-right: 5%;
+ 
 }
 .rounds {
     float: left;
