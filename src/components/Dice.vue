@@ -146,7 +146,8 @@ export default {
 
 div > div.field > div.locked {
     background-color: red;
-    border: solid 2px black;
+    /* border: solid 2px black; */
+    
 }
 
 div > div.field > div.chosen{
@@ -180,6 +181,7 @@ div > div.field > div.chosen{
     justify-content: space-evenly;
     align-items: center;
     padding:10px;
+    position: fixed;
 
     }
   

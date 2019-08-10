@@ -256,7 +256,6 @@ const actions = {
             context.commit("resetCounter");
             context.commit("resetBtnCounter");
             context.commit("resetSavedDice");
-            //context.commit("resetDiceValue");
             context.commit("resetRounds");
 
         },
@@ -298,6 +297,7 @@ const actions = {
 
         /* Receives an id and checks if the value of the protocol id is equal to 0.
         If the value is 0 it sends the id to passOne which changes the pass variable to true.
+        Which causes the background of the protocol id area to turn pink.
         */ 
         passProtocolOne: (context, id) => {
             var p1 = context.state.protocolOne;
@@ -306,7 +306,8 @@ const actions = {
             }
         },
         /* Receives an id and checks if the value of the protocol id is equal to 0.
-        If the value is 0 it sends the id to passOne which changes the pass variable to true.
+        If the value is 0 it sends the id to passTwo which changes the pass variable to true.
+        Which causes the background of the protocol id area to turn pink.
         */ 
         passProtocolTwo: (context, id) => {
             var p2 = context.state.protocolTwo;
@@ -413,14 +414,12 @@ const actions = {
                         sum += x[0].value * 2;
                         // if there are two pairs score is sent to sum.
                         if (pairsFound == 2) {
-                            console.log("sum: " + sum)
                             payload = {index: y, summa: sum};
                         }
                     }
                 }
                 // If sum is greater than 0 send payload to mutation.
                 if( pairsFound > 1) {
-                    console.log("sum after if: " + sum)
                     context.commit('setTwoPairs', payload) 
                 }
                 // If sum is no greater than 0 send sum = 0 in payload to mutation.
@@ -435,10 +434,10 @@ const actions = {
                 context.dispatch('reset');
         },
         /*
-            Filters through the dice values and 
-            loops them through a for-loop to check 
-            for three dice with the same value.
-            */ 
+        Filters through the dice values and 
+        loops them through a for-loop to check 
+        for three dice with the same value.
+        */ 
         threeOfAKind(context) {
             var sD = context.state.savedDice; 
             var payload = null;
@@ -680,14 +679,14 @@ const actions = {
             var y = 6;    
             var a = context.state.housePair;
             var b = context.state.houseThreeOfAKind;
-            console.log("a: " + a);
-            console.log("b: " + b);
+           // If sum from housePair (a) is greater than 0 AND sum from houseThreeOfAKind (b) is greater than 0.
+           // New sum equals a + b, send payload.
             if( a > 0 && b > 0) {
                 sum = a + b;
-                console.log("sum: " + sum);
                 payload = {index: y, summa: sum};
                 context.commit('setFullHouse', payload);
             }
+            // Otherwise sum = 0, send payload.
             else {
                 sum = 0;
                 payload = {index: y, summa: sum};
@@ -699,7 +698,10 @@ const actions = {
             context.dispatch('reset');
         },
 
-        // Adds all the dice values together.
+         /* 
+        This function filters through all of the dice whether they are locked or not.
+        Checks all their values and eventually adds them together.
+        */
         chance(context){
             var allD = context.state.dice; 
             var sum = null;
