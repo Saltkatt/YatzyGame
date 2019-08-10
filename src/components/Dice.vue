@@ -43,7 +43,6 @@ export default {
         onChooseBtnClick(){
             this.$store.commit('increaseBtnCounter')
             this.saveDice() 
-            // this.changeBtnColor() 
         },
 
         /*
@@ -79,21 +78,6 @@ export default {
                 }
             }
         },
-
-        rollDiceAnimation() {
-            var animation = document.getElementsByClassName("dice-pos");
-
-        },
-
-        /* changeBtnColor() {
-            var btnCounter = this.btnCounter;
-            console.log("change colour: " + btnCounter)
-            if (btnCounter == 1) {
-                document.getElementsByClassName("btn chooseDice").style='background-color: blueviolet;';
-            }
-        } */
-
-       
 
     },
     computed: {...mapGetters([
@@ -170,29 +154,6 @@ div > div.field > div.chosen{
     border: solid 2px black;
 }
 
-/* Dice Animation*/
-.rollingDice{
-    -webkit-animation: rollDiceAnimation;
-    -moz-animation: rollDiceAnimation;
-    -o-animation: rollDiceAnimation;
-    animation: rollDiceAnimation;
-}   
-    @keyframes rollDiceAnimation {
-        50% {-webkit-transform: rotate(360deg);}
-    }
-
-    @-o-keyframes rollDiceAnimation {
-        50% {-webkit-transform: rotate(360deg);}
-    }
-
-    @-moz-keyframes rollDiceAnimation {
-        50% {-webkit-transform: rotate(360deg);}
-    }
-
-    @-webkit-keyframes rollDiceAnimation {
-        50% {-webkit-transform: rotate(360deg);}
-    }
-
 /* Button*/
 .btn {
     margin-top: 5px;
@@ -208,7 +169,7 @@ div > div.field > div.chosen{
    
 }
 .changeBtnColor{
-    background-color: lightblue;
+    background-color: red;
 }
 
 /* Desktop */

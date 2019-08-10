@@ -188,7 +188,7 @@ const state = {
       //Dice roll counter (0-3).
       counter: 0,
       //Rounds (0-15)
-      rounds: 14,
+      rounds: 0,
       // Array to save locked dice into.
       savedDice: [],
 

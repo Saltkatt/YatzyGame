@@ -191,6 +191,18 @@ export default {
      pointer-events: none;
 }
 
+
+.protocol-one > div.pass{
+     background-color:lightpink;
+     pointer-events: none;
+}
+
+.protocol-two > div.pass{
+     background-color:lightpink;
+     pointer-events: none;
+}
+    
+
 /* Mobile */
 
 @media screen and (max-width: 500px) {
