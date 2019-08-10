@@ -29,15 +29,13 @@ export default {
             this.$store.commit("showRules");
         },
 
-        isRulesCLicked: function(){
-            return this.getShowRules;
-        }
+        
 
     },
     computed: {...mapGetters([
     'getShowRules',
     ]),
-        isRulesCLicked: function(){
+       isRulesCLicked: function(){
             return this.getShowRules;
         }
     }

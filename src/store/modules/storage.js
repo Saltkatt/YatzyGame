@@ -194,7 +194,6 @@ const state = {
 
       showRules: false,
 
-
       housePair: null,
       houseThreeOfAKind: null,
 
@@ -789,6 +788,7 @@ const mutations = {
             state.dice[i].isLocked = false;
         }
     },
+    // Toggles showRules (true/false)
     showRules:(state) => {
         state.showRules = !state.showRules;
       },

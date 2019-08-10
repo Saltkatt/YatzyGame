@@ -18,6 +18,8 @@
     <button class="btn chooseDice"
     @click="onChooseBtnClick"
     v-bind:disabled="btnCounter === 1"
+    v-bind:class="{changeBtnColor:btnCounter === 1}"
+    
     > Välj </button>
 
    
@@ -40,7 +42,8 @@ export default {
 
         onChooseBtnClick(){
             this.$store.commit('increaseBtnCounter')
-            this.saveDice()  
+            this.saveDice() 
+            // this.changeBtnColor() 
         },
 
         /*
@@ -81,6 +84,14 @@ export default {
             var animation = document.getElementsByClassName("dice-pos");
 
         },
+
+        /* changeBtnColor() {
+            var btnCounter = this.btnCounter;
+            console.log("change colour: " + btnCounter)
+            if (btnCounter == 1) {
+                document.getElementsByClassName("btn chooseDice").style='background-color: blueviolet;';
+            }
+        } */
 
        
 
@@ -183,17 +194,21 @@ div > div.field > div.chosen{
     }
 
 /* Button*/
-
 .btn {
     margin-top: 5px;
     background-color:yellowgreen;
     border-radius: 5px;
     cursor:pointer;
-    height: 30px;
-    width: 90px;
+    height: 50px;
+    width: 100px;
+    font-weight: bold;
 }
 .chooseDice{
     margin-left: 15px;
+   
+}
+.changeBtnColor{
+    background-color: lightblue;
 }
 
 /* Desktop */

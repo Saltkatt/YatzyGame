@@ -60,10 +60,7 @@ export default {
     font-family: 'Courier New', Courier, monospace;
     text-align: center;
 }
-header{
-   
-    
-}
+
 .h1{
     grid-area: h;
     align-content: center;
