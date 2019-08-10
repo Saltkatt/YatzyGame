@@ -186,8 +186,14 @@ div > div.field > div.chosen{
 
 .btn {
     margin-top: 5px;
-    background-color: indigo;
+    background-color:yellowgreen;
     border-radius: 5px;
+    cursor:pointer;
+    height: 30px;
+    width: 90px;
+}
+.chooseDice{
+    margin-left: 15px;
 }
 
 /* Desktop */

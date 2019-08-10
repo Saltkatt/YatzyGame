@@ -1,13 +1,14 @@
 <template>
     <div class="container">
          <header>
-             <button class="btn rulesButton" @click="showRules()">?</button>
+             
              <h1>YATZY</h1>
-             <button class="btn newGame" @click="resetGame()">Nytt Spel</button>
         <!-- Navigation Bar -->
             <nav class="nav-bar">
                 <ul>
-                    <div class="rounds">Rounds: {{getRounds}}</div>
+                    <li><button class="btn rulesButton" @click="showRules()">?</button></li>
+                    <li><button class="btn newGame" @click="resetGame()">Nytt Spel</button></li>
+                    
                 </ul>
 
             </nav>
@@ -59,27 +60,53 @@ export default {
     font-family: 'Courier New', Courier, monospace;
     text-align: center;
 }
+header{
+   
+    
+}
 .h1{
-   display:inline-block;
+    grid-area: h;
+    align-content: center;
 
+}
+.nav-bar{
+    background-color:lightblue;
+    padding: 5px;
+}
+ul{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+li{
+    display: inline;
+    margin: none;
 }
 
 .btn {
+    
     background-color:yellowgreen;
     border-radius: 5px;
     cursor:pointer;
 }
 
 .rulesButton{
+    grid-area: rB;
     float: left;
-    margin: 2%;
+    margin-top: none;
+    height: 30px;
+    width: 30px;
 }
 
 .newGame {
+    grid-area: nG;
     height: 30px;
     width: 90px;
     float: right;
 }
+
+
 
 /* Desktop */
 @media screen and (min-width: 501px){

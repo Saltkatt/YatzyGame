@@ -1,6 +1,7 @@
 <template>
 <div>
     <div class="protocol-area">
+        <div class="rounds">Rounds: {{getRounds}}</div>
         <div class="protocol-one">
             <div class="grid-item 0"  @click="onProtocolClick(1)" v-bind:class="{chosen:getPOne[0].isChosen, pass:getPOne[0].pass}" >Ettor: {{getOnes}} </div>
             <div class="grid-item 1"  @click="onProtocolClick(2)" v-bind:class="{chosen:getPOne[1].isChosen, pass:getPOne[1].pass}">Tvåor: {{getTwos}}  </div>
@@ -115,10 +116,10 @@ export default {
 .protocol-area{
     /* background-color: ivory; */
     justify-content: center;
-    
-    
 }
-
+.rounds{
+    font-weight: bold;
+}
 
 /* Desktop */
 @media screen and(min-width: 501px){
