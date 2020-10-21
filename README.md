@@ -1,4 +1,4 @@
-# yatzy3
+# YatzyGame
 
 ## Project setup
 ```
